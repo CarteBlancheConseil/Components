@@ -1,0 +1,5 @@
+/* Localized versions of Info.plist keys */
+
+CFBundleName = "Graphics";
+CFBundleShortVersionString = "1.2";
+CFBundleGetInfoString = "Graphics versione 1.2, Copyright 2005 Carte Blanche Conseil.";

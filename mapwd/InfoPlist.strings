@@ -1,0 +1,5 @@
+/* Localized versions of Info.plist keys */
+
+CFBundleName = "MapWd";
+CFBundleShortVersionString = "1.2";
+CFBundleGetInfoString = "MapWd version 1.2, Copyright 2014 Carte Blanche Conseil.";

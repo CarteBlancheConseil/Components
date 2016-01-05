@@ -1,0 +1,289 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1440B54719A4D095000E1608 /* CocoaStuff.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1440B54619A4D095000E1608 /* CocoaStuff.mm */; };
+		1449B3BF18F2F46D00742ED7 /* MapWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1449B3BE18F2F46D00742ED7 /* MapWindowController.mm */; };
+		1449B50418F3123100742ED7 /* bMapIntf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1449B50318F3123100742ED7 /* bMapIntf.cpp */; };
+		14BB511B1ADFC158005CF9B6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 14BB51181ADFC158005CF9B6 /* InfoPlist.strings */; };
+		14BB511D1ADFC158005CF9B6 /* Palette.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14BB511A1ADFC158005CF9B6 /* Palette.xib */; };
+		14CA54380DF964990080DF70 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14CA54360DF964990080DF70 /* main.cpp */; };
+		14E43BE419F957BE00A8CAA9 /* mox_intf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E43BE219F957BE00A8CAA9 /* mox_intf.framework */; };
+		14E43BE519F957BE00A8CAA9 /* std_ext.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E43BE319F957BE00A8CAA9 /* std_ext.framework */; };
+		14E43BE819F9587D00A8CAA9 /* MacMapStats.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E43BE619F9587D00A8CAA9 /* MacMapStats.framework */; };
+		14E43BE919F9587D00A8CAA9 /* MacMapSuite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E43BE719F9587D00A8CAA9 /* MacMapSuite.framework */; };
+		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		1440B54619A4D095000E1608 /* CocoaStuff.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaStuff.mm; sourceTree = "<group>"; };
+		1449B3BD18F2F46D00742ED7 /* MapWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapWindowController.h; sourceTree = "<group>"; };
+		1449B3BE18F2F46D00742ED7 /* MapWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MapWindowController.mm; sourceTree = "<group>"; };
+		1449B50218F3122A00742ED7 /* bMapIntf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bMapIntf.h; sourceTree = "<group>"; };
+		1449B50318F3123100742ED7 /* bMapIntf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bMapIntf.cpp; sourceTree = "<group>"; };
+		14BB51181ADFC158005CF9B6 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
+		14BB511A1ADFC158005CF9B6 /* Palette.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Palette.xib; sourceTree = "<group>"; };
+		14CA54360DF964990080DF70 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		14CA54370DF964990080DF70 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
+		14CA57C20DF973C30080DF70 /* CocoaStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaStuff.h; sourceTree = "<group>"; };
+		14E43BE219F957BE00A8CAA9 /* mox_intf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = mox_intf.framework; path = "../../Applis/Current/MacMap®/build/Release/mox_intf.framework"; sourceTree = "<group>"; };
+		14E43BE319F957BE00A8CAA9 /* std_ext.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = std_ext.framework; path = "../../Applis/Current/MacMap®/build/Release/std_ext.framework"; sourceTree = "<group>"; };
+		14E43BE619F9587D00A8CAA9 /* MacMapStats.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MacMapStats.framework; path = ../../../../../../../Library/Frameworks/MacMapStats.framework; sourceTree = "<group>"; };
+		14E43BE719F9587D00A8CAA9 /* MacMapSuite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MacMapSuite.framework; path = ../../../../../../../Library/Frameworks/MacMapSuite.framework; sourceTree = "<group>"; };
+		32DBCF630370AF2F00C91783 /* CocoaBundle_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaBundle_Prefix.pch; sourceTree = "<group>"; };
+		8D5B49B6048680CD000E48DA /* mapwd.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mapwd.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D5B49B3048680CD000E48DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
+				14E43BE419F957BE00A8CAA9 /* mox_intf.framework in Frameworks */,
+				14E43BE519F957BE00A8CAA9 /* std_ext.framework in Frameworks */,
+				14E43BE919F9587D00A8CAA9 /* MacMapSuite.framework in Frameworks */,
+				14E43BE819F9587D00A8CAA9 /* MacMapStats.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* CocoaBundle */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AFFE84173DC02AAC07 /* Classes */,
+				32C88E010371C26100C91783 /* Other Sources */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
+				19C28FB8FE9D52D311CA2CBB /* Products */,
+			);
+			name = CocoaBundle;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
+				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
+			);
+			name = "Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				14BB51181ADFC158005CF9B6 /* InfoPlist.strings */,
+				14BB511A1ADFC158005CF9B6 /* Palette.xib */,
+				8D5B49B7048680CD000E48DA /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77AFFE84173DC02AAC07 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				1449B3BD18F2F46D00742ED7 /* MapWindowController.h */,
+				1449B3BE18F2F46D00742ED7 /* MapWindowController.mm */,
+				14CA57C20DF973C30080DF70 /* CocoaStuff.h */,
+				1440B54619A4D095000E1608 /* CocoaStuff.mm */,
+				1449B50218F3122A00742ED7 /* bMapIntf.h */,
+				1449B50318F3123100742ED7 /* bMapIntf.cpp */,
+				14CA54370DF964990080DF70 /* main.h */,
+				14CA54360DF964990080DF70 /* main.cpp */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7AEFEA557BF11CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				14E43BE619F9587D00A8CAA9 /* MacMapStats.framework */,
+				14E43BE719F9587D00A8CAA9 /* MacMapSuite.framework */,
+				14E43BE219F957BE00A8CAA9 /* mox_intf.framework */,
+				14E43BE319F957BE00A8CAA9 /* std_ext.framework */,
+				089C167FFE841241C02AAC07 /* AppKit.framework */,
+				D2F7E65807B2D6F200F64583 /* CoreData.framework */,
+				089C1672FE841209C02AAC07 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FB8FE9D52D311CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D5B49B6048680CD000E48DA /* mapwd.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		32C88E010371C26100C91783 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32DBCF630370AF2F00C91783 /* CocoaBundle_Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D5B49AC048680CD000E48DA /* mapwd */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "mapwd" */;
+			buildPhases = (
+				8D5B49AF048680CD000E48DA /* Resources */,
+				8D5B49B1048680CD000E48DA /* Sources */,
+				8D5B49B3048680CD000E48DA /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = mapwd;
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = CocoaBundle;
+			productReference = 8D5B49B6048680CD000E48DA /* mapwd.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+			};
+			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "mapwd" */;
+			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				Italian,
+			);
+			mainGroup = 089C166AFE841209C02AAC07 /* CocoaBundle */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D5B49AC048680CD000E48DA /* mapwd */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D5B49AF048680CD000E48DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				14BB511B1ADFC158005CF9B6 /* InfoPlist.strings in Resources */,
+				14BB511D1ADFC158005CF9B6 /* Palette.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D5B49B1048680CD000E48DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				14CA54380DF964990080DF70 /* main.cpp in Sources */,
+				1449B3BF18F2F46D00742ED7 /* MapWindowController.mm in Sources */,
+				1449B50418F3123100742ED7 /* bMapIntf.cpp in Sources */,
+				1440B54719A4D095000E1608 /* CocoaStuff.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB913C08733D840010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "$(SRCROOT)/../../Applis/Current/MacMap®/build/Release";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OBJC_CALL_CXX_CDTORS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GENERATE_PKGINFO_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/include/libxml2",
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = ../../build;
+				OBJROOT = "$(SYMROOT)";
+				PRODUCT_NAME = mapwd;
+				SKIP_INSTALL = YES;
+				SYMROOT = build;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		1DEB914008733D840010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OBJROOT = "$(SYMROOT)";
+				PREBINDING = YES;
+				SDKROOT = macosx10.8;
+				SYMROOT = build;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "mapwd" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB913C08733D840010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "mapwd" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB914008733D840010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}
