@@ -311,7 +311,14 @@ _bTrace_("[bPreview redoAction]",true);
 									  selector:@selector(undoAction:) 
 										object:self];  
 	SendCommandToApplication('redo');
-} 
+}
+
+// ---------------------------------------------------------------------------
+//
+// ------------
+-(void)print:(id)sender{
+    SendCommandToApplication(kHICommandPrint);
+}
 
 #pragma mark ---- Draw ----
 // ---------------------------------------------------------------------------

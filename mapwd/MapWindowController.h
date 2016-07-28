@@ -75,6 +75,7 @@
 -(void)registerAction;
 -(void)undoAction:(NSObject*)target;
 -(void)redoAction:(NSObject*)target;
+-(void)print:(id)sender;
 
 //----------------------------------------------------------------------------
 

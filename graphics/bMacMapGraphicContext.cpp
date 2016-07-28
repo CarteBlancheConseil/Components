@@ -1302,8 +1302,38 @@ void bMacMapGraphicContext::boundsForIcon(){
 	if(!_scr){
 		return;
 	}
-bool b=!_scr->visible();
-	_scr->setbounds(_xpts,_ypts,_npts,nofabs(_hsize/2.0),nofabs(_vsize/2.0),b);
+bool    b=!_scr->visible();
+float   *xpts,*ypts;
+int		npts,noffsets,*offsets;
+   
+    getGeometry(&xpts,&ypts,&npts,&offsets,&noffsets);
+    
+CGRect	cgr={{0,0},{0,0}};
+CGRect	cgrb;
+    
+    cgr.size.height=_vsize;
+    cgr.size.width=_hsize;
+
+    cgrb=cgr;
+    cgrb.origin.x-=_wmaj;
+    cgrb.origin.y-=_hmaj;
+    cgrb.origin.x+=_wdec;
+    cgrb.origin.y+=_hdec;
+    cgrb.size.width+=(_wmaj*2.0);
+    cgrb.size.height+=(_hmaj*2.0);
+    
+CGAffineTransform	at=CGAffineTransformMakeRotation(_angle);
+    cgr=CGRectApplyAffineTransform(cgr,at);
+    at=CGAffineTransformTranslate(at,_wdec,_hdec);
+    cgrb=CGRectApplyAffineTransform(cgrb,at);
+    cgr=CGRectUnion(cgr,cgrb);
+    
+    _scr->setbounds(xpts,
+                    ypts,
+                    npts,
+                    (cgr.size.width+_bgwidth)/2.0,
+                    (cgr.size.height+_bgwidth)/2.0,
+                    b);
 }
 
 // ---------------------------------------------------------------------------
@@ -1405,8 +1435,8 @@ CGAffineTransform	at=CGAffineTransformMakeRotation(_angle);
 			_scr->setbounds(x,
 							y,
 							npts,
-							(_width/2.0)+(cgr.size.width/2.0)+_bgwidth,
-							(_width/2.0)+(cgr.size.height/2.0)+_bgwidth,
+							(_width/2.0)+(cgr.size.width/2.0)+(_bgwidth/2.0),
+							(_width/2.0)+(cgr.size.height/2.0)+(_bgwidth/2.0),
 							b);
 			delete x;
 			delete y;

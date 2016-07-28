@@ -34,6 +34,7 @@
 #include "bPrintGraphicContext.h"
 #include "bBitMapGraphicContext.h"
 #include "bKMLGraphicContext.h"
+#include "bSVGGraphicContext.h"
 #include "main.h"
 
 // ---------------------------------------------------------------------------
@@ -78,13 +79,21 @@ _tm_("instance "+(void*)ctx+" of "+(unsigned int*)&lsign+" created");
 		cg=ctx;
 	}
 	
-	ctx=new bKMLGraphicContext(mmapp);
-	lsign=ctx->signature();
+    ctx=new bKMLGraphicContext(mmapp);
+    lsign=ctx->signature();
 _tm_("instance "+(void*)ctx+" of "+(unsigned int*)&lsign+" created");
-	mmapp->layersMgr()->AddContext(ctx);
-	if(sign==lsign){
-		cg=ctx;
-	}
+    mmapp->layersMgr()->AddContext(ctx);
+    if(sign==lsign){
+        cg=ctx;
+    }
+    
+    ctx=new bSVGGraphicContext(mmapp);
+    lsign=ctx->signature();
+_tm_("instance "+(void*)ctx+" of "+(unsigned int*)&lsign+" created");
+    mmapp->layersMgr()->AddContext(ctx);
+    if(sign==lsign){
+        cg=ctx;
+    }
 	
 	
 	return((void*)cg);
@@ -112,6 +121,9 @@ int sign=((bGenericGraphicContext*)inst)->signature();
 		case kKMLGraphicContext:
 			delete(bKMLGraphicContext*)inst;
 			break;
+        case kSVGGraphicContext:
+            delete(bSVGGraphicContext*)inst;
+            break;
 	}
 _tm_("instance "+inst+" of "+(UInt32*)&sign+" deleted");
 }

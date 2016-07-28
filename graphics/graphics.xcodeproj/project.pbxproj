@@ -17,6 +17,8 @@
 		1497F58312A84731009A0036 /* bCtxGraphicContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 1497F58112A84731009A0036 /* bCtxGraphicContext.h */; };
 		149A401A0B14A15700B39EBB /* bPrintGraphicContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 149A40180B14A15700B39EBB /* bPrintGraphicContext.cpp */; };
 		149A401B0B14A15700B39EBB /* bPrintGraphicContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 149A40190B14A15700B39EBB /* bPrintGraphicContext.h */; };
+		14AF7C761D2E5CF600B554A8 /* bSVGGraphicContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14AF7C741D2E5CF600B554A8 /* bSVGGraphicContext.cpp */; };
+		14AF7C771D2E5CF600B554A8 /* bSVGGraphicContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 14AF7C751D2E5CF600B554A8 /* bSVGGraphicContext.h */; };
 		14BDA06908727BEA004EA1CE /* bCGGraphicContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14BDA06108727BEA004EA1CE /* bCGGraphicContext.cpp */; };
 		14BDA06A08727BEA004EA1CE /* bCGGraphicContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 14BDA06208727BEA004EA1CE /* bCGGraphicContext.h */; };
 		14BDA06B08727BEA004EA1CE /* bMacMapGraphicContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14BDA06308727BEA004EA1CE /* bMacMapGraphicContext.cpp */; };
@@ -46,6 +48,8 @@
 		1497F58112A84731009A0036 /* bCtxGraphicContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bCtxGraphicContext.h; sourceTree = "<group>"; };
 		149A40180B14A15700B39EBB /* bPrintGraphicContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bPrintGraphicContext.cpp; sourceTree = "<group>"; };
 		149A40190B14A15700B39EBB /* bPrintGraphicContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bPrintGraphicContext.h; sourceTree = "<group>"; };
+		14AF7C741D2E5CF600B554A8 /* bSVGGraphicContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bSVGGraphicContext.cpp; sourceTree = "<group>"; };
+		14AF7C751D2E5CF600B554A8 /* bSVGGraphicContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bSVGGraphicContext.h; sourceTree = "<group>"; };
 		14BDA06108727BEA004EA1CE /* bCGGraphicContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bCGGraphicContext.cpp; sourceTree = "<group>"; };
 		14BDA06208727BEA004EA1CE /* bCGGraphicContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bCGGraphicContext.h; sourceTree = "<group>"; };
 		14BDA06308727BEA004EA1CE /* bMacMapGraphicContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bMacMapGraphicContext.cpp; sourceTree = "<group>"; };
@@ -130,6 +134,8 @@
 				1413630911ECB77400203F0A /* bBitMapGraphicContext.h */,
 				142FE2650C145A8A004163E6 /* bKMLGraphicContext.cpp */,
 				142FE2660C145A8A004163E6 /* bKMLGraphicContext.h */,
+				14AF7C741D2E5CF600B554A8 /* bSVGGraphicContext.cpp */,
+				14AF7C751D2E5CF600B554A8 /* bSVGGraphicContext.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -156,6 +162,7 @@
 				149767AC08C5B90600F9E7F8 /* main.h in Headers */,
 				149A401B0B14A15700B39EBB /* bPrintGraphicContext.h in Headers */,
 				142FE2680C145A8A004163E6 /* bKMLGraphicContext.h in Headers */,
+				14AF7C771D2E5CF600B554A8 /* bSVGGraphicContext.h in Headers */,
 				1413630B11ECB77400203F0A /* bBitMapGraphicContext.h in Headers */,
 				1497F58312A84731009A0036 /* bCtxGraphicContext.h in Headers */,
 			);
@@ -243,6 +250,7 @@
 				14BDA06B08727BEA004EA1CE /* bMacMapGraphicContext.cpp in Sources */,
 				14BDA06D08727BEA004EA1CE /* bPDFGraphicContext.cpp in Sources */,
 				149A401A0B14A15700B39EBB /* bPrintGraphicContext.cpp in Sources */,
+				14AF7C761D2E5CF600B554A8 /* bSVGGraphicContext.cpp in Sources */,
 				142FE2670C145A8A004163E6 /* bKMLGraphicContext.cpp in Sources */,
 				1413630A11ECB77400203F0A /* bBitMapGraphicContext.cpp in Sources */,
 				1497F58212A84731009A0036 /* bCtxGraphicContext.cpp in Sources */,

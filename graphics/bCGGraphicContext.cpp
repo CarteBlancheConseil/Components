@@ -297,10 +297,10 @@ float	*xpts,*ypts;
 	}
 
 	if(_drawflg){
-CGRect  cgr;
+CGRect  cgr,box;
 
         if(_pdfdoc){
-//CGPDFPageRef	pg=CGPDFDocumentGetPage(_pdfdoc,1);
+CGPDFPageRef	pg=CGPDFDocumentGetPage(_pdfdoc,1);
 
 			for(i=0;i<npts;i++){
 				cgr.size.width=nofabs(_hsize);
@@ -360,27 +360,34 @@ CGRect  cgr;
                     CGContextRestoreGState(_ctx);
                 }
 
-                
  // Draw PDF
+                cgr.size.width=nofabs(_hsize);
+                cgr.size.height=nofabs(_vsize);
+                CGContextSaveGState(_ctx);
                 if(_angle!=0){
 					cgr.origin.x=-(nofabs(_hsize)/2.0);
 					cgr.origin.y=-(nofabs(_vsize)/2.0);
-					CGContextSaveGState(_ctx);					
 					CGContextTranslateCTM(	_ctx,
 											xpts[i],
 											ypts[i]);
-					CGContextRotateCTM(_ctx,_angle);
+                    CGContextRotateCTM(_ctx,_angle);
 				}
 				else{
 					cgr.origin.x=xpts[i]-(nofabs(_hsize)/2.0);
 					cgr.origin.y=ypts[i]-(nofabs(_vsize)/2.0);
-				}
-				CGContextDrawPDFDocument(_ctx,cgr,_pdfdoc,1);
-//				CGContextDrawPDFPage(ctx,pg);
+                    
 
-				if(_angle!=0){
-					CGContextRestoreGState(_ctx);
 				}
+                CGContextTranslateCTM(_ctx,
+                                      cgr.origin.x,
+                                      cgr.origin.y);
+                
+                box=CGPDFPageGetBoxRect(pg,kCGPDFMediaBox);
+                CGContextScaleCTM(_ctx,cgr.size.width/box.size.width,cgr.size.height/box.size.height);
+
+				CGContextDrawPDFPage(_ctx,pg);
+                CGContextRestoreGState(_ctx);
+                
 			}
 		}
 		else{
@@ -390,7 +397,7 @@ CGRect  cgr;
                 
 // Draw background
                 if(	((_bgwidth>0)&&(colors[_alpha+_backstroke]>0))	||
-                   (colors[_alpha+_backfill]>0)					){
+                    (colors[_alpha+_backfill]>0)					){
                     CGContextSaveGState(_ctx);
                     
                     setColorLevel(_backfill);
@@ -421,8 +428,8 @@ CGRect  cgr;
                         CGContextAddRoundedRect(_ctx,cgr,_rradius);
                     }
                     if(	(_bgwidth>0)					&&
-                       (colors[_alpha+_backstroke]>0)	&&
-                       (colors[_alpha+_backfill]>0)	){
+                        (colors[_alpha+_backstroke]>0)	&&
+                        (colors[_alpha+_backfill]>0)	){
                         CGContextSetLineWidth(_ctx,_bgwidth);
                         setColorLevel(_backstroke);
                         plotColor();
@@ -444,9 +451,11 @@ CGRect  cgr;
                 
                 
 // Draw image
+                cgr.size.width=nofabs(_hsize);
+                cgr.size.height=nofabs(_vsize);
                 if(_angle!=0){
 					cgr.origin.x=-(nofabs(_hsize)/2.0);
-					cgr.origin.y=-(nofabs(_vsize)/2.0);
+                    cgr.origin.y=-(nofabs(_vsize)/2.0);
 					CGContextSaveGState(_ctx);					
 					CGContextTranslateCTM(	_ctx,
 											xpts[i],
@@ -458,7 +467,6 @@ CGRect  cgr;
 					cgr.origin.y=ypts[i]-(nofabs(_vsize)/2.0);
 				}
 				CGContextDrawImage(_ctx,cgr,_imagedoc);
-                
 				if(_angle!=0){
 					CGContextRestoreGState(_ctx);
 				}
