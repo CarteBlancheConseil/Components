@@ -43,13 +43,13 @@ public:
     bSVGGraphicContext 						(	bGenericMacMapApp* app);
     virtual ~bSVGGraphicContext  			(	);
 
-    virtual void setPDF						(	void* data, 
+    virtual void setPDF						(	void* data,
                                                 int sz,
                                                 const char* name);
-    virtual void setImage					(	void* data, 
-                                                int sz, 
+    virtual void setImage					(	void* data,
+                                                int sz,
                                                 const char* name);
-    
+
 // Procédures de dessin
     virtual void drawIcon					(	);
     virtual void drawCircle					(	);
@@ -62,29 +62,23 @@ public:
     virtual void beginDraw					(	);
     virtual void endDraw					(	);
     virtual void reset						(	);
-//	virtual void flush						(	);
     
     virtual int signature					(	);
     virtual void set_path					(	const char* path);
     
-//    virtual void addArc						(	CGPoint cgp);
-//    virtual void addRect					(	CGPoint cgp);
-//    virtual void addDesc					(	);
-    
+    virtual void addBackRect				(	CGRect cgr,
+                                                CGPoint o);
+
+/*    virtual void addCircle					(	CGPoint cgp);
+    virtual void addCircleRadius			(	CGPoint cgp,
+                                                CGFloat r);*/
+
     virtual CGFloat get_y                   (	CGFloat y);
 
 private:
     FILE*		_fp;
-    int			_layr;
-    int			_count;
-    int			_icid;
-    bStdProj*	_fromp;
-    wgs84		_wgs;
-    char		_icnspath[PATH_MAX];
-    char		_icnsnm[FILENAME_MAX];
-    float		_icnw;
-    float		_icnh;
-    char		_path[PATH_MAX];
+    char		_path[PATH_MAX*3];
+    char		_imgname[PATH_MAX*3];
 };
 
 //----------------------------------------------------------------------------

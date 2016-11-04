@@ -708,10 +708,10 @@ void bMacMapGraphicContext::getGeography(ivertices **vxs, bool *disposeit){
 // 
 // ------------
 void bMacMapGraphicContext::setGeography(ivertices *vxs, bool disposeit){
-	if(_vxs&&disposeit){
+	if(_vxs&&_disposeit){
 		ivs_free(_vxs);
-		_vxs=NULL;
-		disposeit=false;
+//		_vxs=NULL;
+//		disposeit=false;
 	}
 	_vxs=vxs;
 	_disposeit=disposeit;

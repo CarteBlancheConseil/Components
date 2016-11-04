@@ -40,30 +40,6 @@
 #define _ucmax_ 255.0
 
 // ---------------------------------------------------------------------------
-// 
-// ------------
-static void MacRoman2UTF8(char* str){
-	if(strlen(str)==0){
-		return;
-	}
-CFStringRef	cfs=CFStringCreateWithCString(kCFAllocatorDefault,str,kCFStringEncodingMacRoman);
-	CFStringGetCString(cfs,str,1024,kCFStringEncodingUTF8);
-	CFRelease(cfs);
-}
-
-// ---------------------------------------------------------------------------
-// 
-// ------------
-static void UTF82MacRoman(char* str){
-	if(strlen(str)==0){
-		return;
-	}
-CFStringRef	cfs=CFStringCreateWithCString(kCFAllocatorDefault,str,kCFStringEncodingUTF8);
-	CFStringGetCString(cfs,str,1024,kCFStringEncodingMacRoman);
-	CFRelease(cfs);
-}
-
-// ---------------------------------------------------------------------------
 // Constructeur
 // ------------
 bKMLGraphicContext	::bKMLGraphicContext(bGenericMacMapApp* app)
@@ -106,14 +82,14 @@ CGImageRef	img=CGImageCreateFromData(outdata,outsz,kQTFileTypePNG);
 	
 char			path[PATH_MAX*3];
 	strcpy(path,_icnspath);
-	UTF82MacRoman(path);
+	UTF82MacRoman(path,sizeof(path)-1);
 bStdDirectory	d(path);
 	_icid++;
 	sprintf(_icnsnm,"ic%d_%s",_icid,name);
 	strrep(_icnsnm,".","_");
 	strcat(_icnsnm,".png");
 	strcpy(path,_icnsnm);
-	UTF82MacRoman(path);
+	UTF82MacRoman(path,sizeof(path)-1);
 bStdFile		f(path,"w");
 	f.write(outdata,outsz);
 	free(outdata);
@@ -137,12 +113,12 @@ CGImageRef	img=CGImageCreateFromData(data,sz,GetImageKind(name));
 	}
 char			path[PATH_MAX*3];
 	strcpy(path,_icnspath);
-	UTF82MacRoman(path);
+	UTF82MacRoman(path,sizeof(path)-1);
 bStdDirectory	d(path);
 	_icid++;
 	sprintf(_icnsnm,"ic%d_%s",_icid,name);
 	strcpy(path,_icnsnm);
-	UTF82MacRoman(path);
+	UTF82MacRoman(path,sizeof(path)-1);
 bStdFile		f(path,"w");
 	f.write(data,sz);
 }
@@ -185,7 +161,7 @@ dvertices*	dvx=dvs_new(_2D_VX,npts,0);
 		_wgs.transform(*_fromp,dvx);
 		
 		getCurElement()->getName(name);
-		MacRoman2UTF8(name);
+		MacRoman2UTF8(name,sizeof(name)-1);
 		
 		sprintf(path,"%s/%s",_icnspath,_icnsnm);
 		
@@ -280,7 +256,7 @@ unsigned char	sa=round(colors[_alpha+_stroke]*_ucmax_);
 char	name[256];
 		
 		getCurElement()->getName(name);
-		MacRoman2UTF8(name);
+		MacRoman2UTF8(name,sizeof(name)-1);
 				
 		for(i=0;i<npts;i++){
 			fprintf(_fp,"<Placemark>\n");
@@ -406,7 +382,7 @@ unsigned char	sa=round(colors[_alpha+_stroke]*_ucmax_);
 char	name[256];
 		
 		getCurElement()->getName(name);
-		MacRoman2UTF8(name);
+		MacRoman2UTF8(name,sizeof(name)-1);
 
 		for(i=0;i<npts;i++){
 			fprintf(_fp,"<Placemark>\n");
@@ -508,7 +484,7 @@ unsigned char	sa=round(colors[_alpha+_stroke]*_ucmax_);
 char	name[256];
 		
 		getCurElement()->getName(name);
-		MacRoman2UTF8(name);
+		MacRoman2UTF8(name,sizeof(name)-1);
 
 		dvx=dvs_new(_2D_VX,npts,noffsets);
 
@@ -592,7 +568,7 @@ unsigned char	sa=round(colors[_alpha+_stroke]*_ucmax_);
 char	name[256];
 		
 		getCurElement()->getName(name);
-		MacRoman2UTF8(name);
+		MacRoman2UTF8(name,sizeof(name)-1);
 
 		dvx=dvs_new(_2D_VX,npts,noffsets);
 
@@ -724,7 +700,7 @@ char	path[PATH_MAX];
 
 		sprintf(path,"%s/%s",_icnspath,_icnsnm);
 		getCurElement()->getName(name);
-		MacRoman2UTF8(name);
+		MacRoman2UTF8(name,sizeof(name)-1);
 
 		fprintf(_fp,"<GroundOverlay>\n");
 		fprintf(_fp,"<name>%s</name>\n",name);
@@ -750,7 +726,6 @@ char	path[PATH_MAX];
 // ------------
 void bKMLGraphicContext::beginDraw(){
 	_icnspath[0]=0;
-
 	bMacMapGraphicContext::beginDraw();
 	if(strlen(_path)==0){
 		return;
@@ -956,11 +931,11 @@ fexp_field			fld;
             else{
                 tp->fields()->get_name(fidx,val);
             }
-			MacRoman2UTF8(val);
+			MacRoman2UTF8(val,sizeof(val)-1);
 			fprintf(_fp,"%s",val);
 			fprintf(_fp,"</td><td>");
 			o->getValue(fidx,val);
-			MacRoman2UTF8(val);
+			MacRoman2UTF8(val,sizeof(val)-1);
 			fprintf(_fp,"%s",val);
 			fprintf(_fp,"</td></tr>");
 		}
@@ -969,11 +944,11 @@ fexp_field			fld;
 		for(int i=kOBJ_SubType_;i<=tp->fields()->count();i++){
 			fprintf(_fp,"<tr><td>");
 			tp->fields()->get_name(i,val);
-			MacRoman2UTF8(val);
+			MacRoman2UTF8(val,sizeof(val)-1);
 			fprintf(_fp,"%s",val);
 			fprintf(_fp,"</td><td>");
 			o->getValue(i,val);
-			MacRoman2UTF8(val);
+			MacRoman2UTF8(val,sizeof(val)-1);
 			fprintf(_fp,"%s",val);
 			fprintf(_fp,"</td></tr>");
 		}
