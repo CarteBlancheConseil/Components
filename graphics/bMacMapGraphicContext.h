@@ -245,8 +245,6 @@ public:
 
 	virtual void set_context					(	CGContextRef ctx){};
 
-	virtual void set_window						(	WindowRef wd){};
-
 	virtual void set_path						(	const char* path){};
 	virtual void set_bitmap_info				(	void *data, 
 													size_t width, 
@@ -256,6 +254,9 @@ public:
 													CGColorSpaceRef colorspace, 
 													CGBitmapInfo bitmapInfo,
 													CGContextRef* outbm){};
+
+
+//    virtual void set_window						(	WindowRef wd){};
 
 protected:
 	virtual bGenericScreenObj* getElement		(	);

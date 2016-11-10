@@ -384,6 +384,7 @@ CGPDFPageRef	pg=CGPDFDocumentGetPage(_pdfdoc,1);
                 
                 box=CGPDFPageGetBoxRect(pg,kCGPDFMediaBox);
                 CGContextScaleCTM(_ctx,cgr.size.width/box.size.width,cgr.size.height/box.size.height);
+                CGContextTranslateCTM(_ctx,-box.origin.x,-box.origin.y);
 
 				CGContextDrawPDFPage(_ctx,pg);
                 CGContextRestoreGState(_ctx);

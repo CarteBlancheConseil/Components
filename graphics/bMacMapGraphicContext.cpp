@@ -1669,12 +1669,6 @@ CGRect bMacMapGraphicContext::get_box(){
 // ---------------------------------------------------------------------------
 // 
 // ------------
-//void bMacMapGraphicContext::set_window(WindowRef wd){
-//}
-
-// ---------------------------------------------------------------------------
-// 
-// ------------
 //void bMacMapGraphicContext::set_port(GrafPtr port){
 //_bTrace_("bMacMapGraphicContext::set_port",true);
 //	_port=port;
