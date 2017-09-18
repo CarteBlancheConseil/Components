@@ -726,11 +726,12 @@ _tm_((void*)self);
 MapWindowController*	mmc=(MapWindowController*)[self windowController];
 	if(mmc){
 		[mmc write];
-		[mmc getApp]->close_doc();
-        [mmc getApp]->mapIntf()->close();
+		[mmc getApp]->close_doc();		
 	}
 	[super close];
 }
+
+
 
 // ---------------------------------------------------------------------------
 // 
@@ -807,14 +808,6 @@ MapWindowController*	mmc=(MapWindowController*)[self windowController];
 		[[self window] orderOut:self];
 	}
     return self;
-}
-
-// ---------------------------------------------------------------------------
-//
-// ------------
-- (void)dealloc{
-_bTrace_("[MapWindowController dealloc]",true);
-    [super dealloc];
 }
 
 // ---------------------------------------------------------------------------

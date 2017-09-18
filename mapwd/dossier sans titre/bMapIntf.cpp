@@ -65,15 +65,9 @@ _bTrace_("bMapIntf::open()",true);
 // -----------
 void bMapIntf::close(){
 _bTrace_("bMapIntf::close()",true);
-// On arrive ici si mainwindow a déjà été fermé
 	if(_controller){
-        if(_gapp->document()==NULL){ // Fermeture normale
-            disposeCocoa(_controller);
-        }
-        else{ // Pourquoi arriverait on ici ?
-            closeCocoa(_controller);
-        }
-        _controller=NULL;
+		closeCocoa(_controller);
+		_controller=NULL;
 	}
 }
 
