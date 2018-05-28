@@ -67,9 +67,112 @@ char    spc[2]={160,0};// > l'officiel
     }
     else{
         bMacMapGraphicContext::setText(text);
-//        bMacMapGraphicContext::setText("merde");
     }
 }*/
+
+// ---------------------------------------------------------------------------
+//
+// ------------
+void bPDFGraphicContext::setFillPattern(void* data, int sz, const char* name){
+    if(strstr(name,_fillpatname)==0){
+        return;
+    }
+    freeFillPattern();
+    bMacMapGraphicContext::setFillPattern(data,sz,name);
+    if(_fillpat==NULL){
+        return;
+    }
+    if(!_ctx){
+        return;
+    }
+float				color[4]={0,0,0,1};
+CGPatternCallbacks	callbacks={0,&bCGPDFPattern::drawproc,&bCGPDFPattern::releaseproc};
+CGColorSpaceRef		baseSpace=CGColorSpaceCreateDeviceRGB();
+CGColorSpaceRef		patternSpace=CGColorSpaceCreatePattern(baseSpace);
+float				cf=getUnitCoef()*getFixConv();
+    
+    CGContextSetFillColorSpace(_ctx,patternSpace);
+    CGColorSpaceRelease(patternSpace);
+    CGColorSpaceRelease(baseSpace);
+    
+CGPDFPageRef		pg=CGPDFDocumentGetPage(_fillpat,1);
+CGRect				cgr=CGPDFPageGetBoxRect(pg,kCGPDFCropBox);
+    
+    cgr.size.width*=cf;
+    cgr.size.height*=cf;
+    
+bCGPDFPattern*	bpat=new bCGPDFPattern(_fillpat,cgr,&colors[_backfill],colorspace[2]);
+CGPatternRef	pattern=CGPatternCreate(bpat,
+                                        cgr,
+                                        CGAffineTransformIdentity,
+                                        cgr.size.width,
+                                        cgr.size.height,
+                                        kCGPatternTilingConstantSpacing,
+                                        false, 
+                                        &callbacks);  
+    bpat->set_ref(pattern);
+    CGContextSetFillPattern(_ctx,pattern,color);
+    
+    _fpat=bpat;
+}
+
+// ---------------------------------------------------------------------------
+//
+// ------------
+void bPDFGraphicContext::freeFillPattern(){
+}
+
+// ---------------------------------------------------------------------------
+//
+// ------------
+void bPDFGraphicContext::setStrokePattern(void* data, int sz, const char* name){
+    if(strstr(name,_strokepatname)==0){
+        return;
+    }
+    freeStrokePattern();
+    bMacMapGraphicContext::setStrokePattern(data,sz,name);
+    if(_strokepat==NULL){
+        return;
+    }
+    if(!_ctx){
+        return;
+    }
+float				color[4]={0,0,0,1};
+CGPatternCallbacks	callbacks={0,&bCGPDFPattern::drawproc,&bCGPDFPattern::releaseproc};
+CGColorSpaceRef		baseSpace=CGColorSpaceCreateDeviceRGB();
+CGColorSpaceRef		patternSpace=CGColorSpaceCreatePattern(baseSpace);
+float				cf=getUnitCoef()*getFixConv();
+    
+    CGContextSetFillColorSpace(_ctx,patternSpace);
+    CGColorSpaceRelease(patternSpace);
+    CGColorSpaceRelease(baseSpace);
+    
+CGPDFPageRef		pg=CGPDFDocumentGetPage(_strokepat,1);
+CGRect				cgr=CGPDFPageGetBoxRect(pg,kCGPDFCropBox);
+    
+    cgr.size.width*=cf;
+    cgr.size.height*=cf;
+    
+bCGPDFPattern*	bpat=new bCGPDFPattern(_strokepat,cgr);
+CGPatternRef	pattern=CGPatternCreate(bpat,
+                                        cgr,
+                                        CGAffineTransformIdentity,
+                                        cgr.size.width,
+                                        cgr.size.height,
+                                        kCGPatternTilingConstantSpacing,
+                                        false, 
+                                        &callbacks);   
+    bpat->set_ref(pattern);
+    CGContextSetStrokePattern(_ctx,pattern,color);
+    
+    _spat=bpat;
+}
+
+// ---------------------------------------------------------------------------
+//
+// ------------
+void bPDFGraphicContext::freeStrokePattern(){
+}
 
 // ---------------------------------------------------------------------------
 // 

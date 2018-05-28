@@ -143,10 +143,12 @@ public:
 													int sz,
 													const char* name);
 	virtual CGPDFDocumentRef getFillPattern		(	);
-	virtual void setStrokePattern				(	void* data, 
+    virtual void freeFillPattern                (   );
+	virtual void setStrokePattern				(	void* data,
 													int sz,
 													const char* name);
 	virtual CGPDFDocumentRef getStrokePattern	(	);
+    virtual void freeStrokePattern              (   );
 
 // Scales		
 	virtual void setScaleRef					(	double scaleref);
@@ -261,6 +263,7 @@ public:
 protected:
 	virtual bGenericScreenObj* getElement		(	);
 	
+    
 	float					colors[20];
 	int						colorlevel;
 	int						colorspace[4];
@@ -298,7 +301,10 @@ protected:
 	CGImageRef				_imagedoc;
 	CGPDFDocumentRef		_pdfdoc;
 	CGPDFDocumentRef		_strokepat;
+    char					_strokepatname[256];
 	CGPDFDocumentRef		_fillpat;
+    char					_fillpatname[256];
+
 			
 	bGenericScreenObj*		_scr;
 	ivertices* 				_vxs;

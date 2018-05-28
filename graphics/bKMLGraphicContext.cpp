@@ -936,6 +936,7 @@ fexp_field			fld;
 			fprintf(_fp,"</td><td>");
 			o->getValue(fidx,val);
 			MacRoman2UTF8(val,sizeof(val)-1);
+            
 			fprintf(_fp,"%s",val);
 			fprintf(_fp,"</td></tr>");
 		}

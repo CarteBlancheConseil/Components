@@ -40,6 +40,8 @@
 bCGGraphicContext	::bCGGraphicContext(bGenericMacMapApp* app)
 					:bMacMapGraphicContext(app){
 	_ctx=NULL;
+    _fpat=NULL;
+    _spat=NULL;
 }
 
 // ---------------------------------------------------------------------------
@@ -198,6 +200,10 @@ void bCGGraphicContext::setCharSpacing(float space){
 // 
 // ------------
 void bCGGraphicContext::setFillPattern(void* data, int sz, const char* name){
+    if(strstr(name,_fillpatname)==0){
+        return;
+    }
+    freeFillPattern();
 	bMacMapGraphicContext::setFillPattern(data,sz,name);
 	if(_fillpat==NULL){
 		return;
@@ -206,7 +212,7 @@ void bCGGraphicContext::setFillPattern(void* data, int sz, const char* name){
 		return;
 	}
 float				color[4]={0,0,0,1};
-CGPatternCallbacks	callbacks={0,&bCGPDFPattern::drawproc,&bCGPDFPattern::releaseproc};
+CGPatternCallbacks	callbacks={0,&bCGPDFPattern::drawproc,NULL/*&bCGPDFPattern::releaseproc*/};
 CGColorSpaceRef		baseSpace=CGColorSpaceCreateDeviceRGB();
 CGColorSpaceRef		patternSpace=CGColorSpaceCreatePattern(baseSpace);
 float				cf=getUnitCoef()*getFixConv();
@@ -232,21 +238,38 @@ CGPatternRef	pattern=CGPatternCreate(bpat,
 										&callbacks);  
 	bpat->set_ref(pattern);
 	CGContextSetFillPattern(_ctx,pattern,color);
+    
+    _fpat=bpat;
+}
+
+// ---------------------------------------------------------------------------
+//
+// ------------
+void bCGGraphicContext::freeFillPattern(){
+    bMacMapGraphicContext::freeFillPattern();
+    if(_fpat){
+        delete _fpat;
+        _fpat=NULL;
+    }
 }
 
 // ---------------------------------------------------------------------------
 // 
 // ------------
 void bCGGraphicContext::setStrokePattern(void* data, int sz, const char* name){
+    if(strstr(name,_strokepatname)==0){
+        return;
+    }
+    freeStrokePattern();
 	bMacMapGraphicContext::setStrokePattern(data,sz,name);
-	if(_strokepat==NULL){
+    if(_strokepat==NULL){
 		return;
 	}	
 	if(!_ctx){
 		return;
 	}
 float				color[4]={0,0,0,1};
-CGPatternCallbacks	callbacks={0,&bCGPDFPattern::drawproc,&bCGPDFPattern::releaseproc};
+CGPatternCallbacks	callbacks={0,&bCGPDFPattern::drawproc,NULL/*&bCGPDFPattern::releaseproc*/};
 CGColorSpaceRef		baseSpace=CGColorSpaceCreateDeviceRGB();
 CGColorSpaceRef		patternSpace=CGColorSpaceCreatePattern(baseSpace);
 float				cf=getUnitCoef()*getFixConv();
@@ -272,6 +295,19 @@ CGPatternRef	pattern=CGPatternCreate(bpat,
 										&callbacks);   
 	bpat->set_ref(pattern);
     CGContextSetStrokePattern(_ctx,pattern,color);
+    
+    _spat=bpat;
+}
+
+// ---------------------------------------------------------------------------
+//
+// ------------
+void bCGGraphicContext::freeStrokePattern(){
+    bMacMapGraphicContext::freeStrokePattern();
+    if(_spat){
+        delete _spat;
+        _spat=NULL;
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -1166,12 +1202,28 @@ void bCGGraphicContext::flush(){
 	CGContextFlush(_ctx);
 }
 
+// ---------------------------------------------------------------------------
+//
+// ------------
+void bCGGraphicContext::reset(){
+    bMacMapGraphicContext::reset();
+//    if(_fpat){
+//        delete _fpat;
+//        _fpat=NULL;
+//    }
+//    if(_spat){
+//        delete _spat;
+//        _spat=NULL;
+//    }
+}
+
 #pragma mark -
 #pragma mark =>bCGPDFPattern
 // ---------------------------------------------------------------------------
 // Constructeur
 // ------------
 bCGPDFPattern::bCGPDFPattern(CGPDFDocumentRef pat, CGRect box, float* bgclr, long bgclrspc){
+//_bTrace_("bCGPDFPattern::bCGPDFPattern(CGPDFDocumentRef,CGRect,float*,long)",true);
 	_ref=NULL;
 	_pat=pat;
 	_box=box;
@@ -1200,6 +1252,7 @@ CGRect cgr=CGPDFPageGetBoxRect(_pg,kCGPDFMediaBox);
 // Constructeur
 // ------------
 bCGPDFPattern::bCGPDFPattern(CGPDFDocumentRef pat, CGRect box){
+//_bTrace_("bCGPDFPattern::bCGPDFPattern(CGPDFDocumentRef,CGRect)",true);
 	_ref=NULL;
 	_pat=pat;
 	_box=box;
@@ -1226,13 +1279,16 @@ CGRect	cgr=CGPDFPageGetBoxRect(_pg,kCGPDFMediaBox);
 // Destructeur
 // ------------
 bCGPDFPattern::~bCGPDFPattern(){
-	CGPDFDocumentRelease(_pat);
+//_bTrace_("bCGPDFPattern::~bCGPDFPattern()",true);
+//    CGPDFDocumentRelease(_pat);
 	if(_ref){
+//_tm_("CGPatternRelease");
 		CGPatternRelease(_ref);
 	}
 // NEW
 	if(_pg){
-		CGPDFPageRelease(_pg);
+//_tm_("CGPDFPageRelease");
+//		CGPDFPageRelease(_pg);
 	}
 }
 
@@ -1309,18 +1365,23 @@ void bCGPDFPattern::plot(CGContextRef ctx){
 // 
 // ------------
 void bCGPDFPattern::retain(){
+//_bTrace_("bCGPDFPattern::retain",false);
 	_rc++;
+//_tm_(_rc);
 }
 
 // ---------------------------------------------------------------------------
 // 
 // ------------
 void bCGPDFPattern::release(bCGPDFPattern* pattern){
+//_bTrace_("bCGPDFPattern::release",false);
 	if(pattern->_rc<=0){
+//_tm_(pattern->_rc);
 		delete pattern;
 		return;
 	}
 	pattern->_rc--;
+//_tm_(pattern->_rc);
 }
 
 // ---------------------------------------------------------------------------

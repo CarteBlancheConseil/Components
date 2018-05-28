@@ -42,7 +42,15 @@ public:
     virtual ~bPDFGraphicContext 	(	);
     
 //    virtual void setText			(	const char* text);
-    
+    virtual void setFillPattern		(	void* data,
+                                        int sz,
+                                        const char* name);
+    virtual void freeFillPattern    (   );
+    virtual void setStrokePattern	(	void* data,
+                                        int sz,
+                                        const char* name);
+    virtual void freeStrokePattern  (   );
+
     virtual void beginDraw			(	);
     virtual void endDraw			(	);
     

@@ -36,55 +36,6 @@
 
 //----------------------------------------------------------------------------
 
-class bCGGraphicContext : public bMacMapGraphicContext{
-protected:
-    bCGGraphicContext 						(	bGenericMacMapApp* app);
-    virtual ~bCGGraphicContext  			(	);
-
-public:	 
-// Accès variables		
-    virtual void plotColor					(	);
-
-    virtual void setWidth					(	float	width);
-    virtual void setMiterLimit				(	float	limit);
-    virtual void setJoin					(	int	join);
-    virtual void setCap						(	int	cap);
-    virtual void setDash					(	float* dash, 
-                                                int ndash,
-                                                const char* name);
-    
-    virtual void setCharSpacing				(	float	space);
-            
-    virtual void setFillPattern				(	void* data, 
-                                                int sz,
-                                                const char* name);
-    virtual void setStrokePattern			(	void* data, 
-                                                int sz,
-                                                const char* name);
-
-// Procédures de dessin
-    virtual void drawIcon					(	);				// Dessin de l'élément courant par point
-    virtual void drawCircle					(	);				// Dessin de l'élément courant par cercle
-    virtual void drawRect					(	);				// Dessin de l'élément courant par carré
-    virtual void drawText					(	);				// Dessin de l'élément courant par texte
-    virtual void drawLine					(	);				// Dessin de l'élément courant par ligne
-    virtual void drawSurf					(	);				// Dessin de l'élément courant par surface
-    virtual void drawRaster					(	);				// Dessin de l'élément courant par raster
-    
-    virtual void beginDraw					(	);
-    virtual void endDraw					(	);
-
-    virtual void flush						(	);
-    
-protected:
-    CGContextRef	_ctx;
-    
-private:
-    
-};
-
-//----------------------------------------------------------------------------
-
 class bCGPDFPattern{
 public:
     bCGPDFPattern 				(	CGPDFDocumentRef pat,
@@ -111,8 +62,59 @@ private:
     double				_hscl;
     double				_bgclr[5];
     long				_bgclrspc;
+};
 
-//	int					tmp;
+//----------------------------------------------------------------------------
+
+class bCGGraphicContext : public bMacMapGraphicContext{
+protected:
+    bCGGraphicContext 						(	bGenericMacMapApp* app);
+    virtual ~bCGGraphicContext  			(	);
+
+public:	 
+// Accès variables		
+    virtual void plotColor					(	);
+
+    virtual void setWidth					(	float	width);
+    virtual void setMiterLimit				(	float	limit);
+    virtual void setJoin					(	int	join);
+    virtual void setCap						(	int	cap);
+    virtual void setDash					(	float* dash, 
+                                                int ndash,
+                                                const char* name);
+    
+    virtual void setCharSpacing				(	float	space);
+            
+    virtual void setFillPattern				(	void* data, 
+                                                int sz,
+                                                const char* name);
+    virtual void freeFillPattern            (   );
+    virtual void setStrokePattern			(	void* data,
+                                                int sz,
+                                                const char* name);
+    virtual void freeStrokePattern          (   );
+
+// Procédures de dessin
+    virtual void drawIcon					(	);				// Dessin de l'élément courant par point
+    virtual void drawCircle					(	);				// Dessin de l'élément courant par cercle
+    virtual void drawRect					(	);				// Dessin de l'élément courant par carré
+    virtual void drawText					(	);				// Dessin de l'élément courant par texte
+    virtual void drawLine					(	);				// Dessin de l'élément courant par ligne
+    virtual void drawSurf					(	);				// Dessin de l'élément courant par surface
+    virtual void drawRaster					(	);				// Dessin de l'élément courant par raster
+    
+    virtual void beginDraw					(	);
+    virtual void endDraw					(	);
+
+    virtual void flush						(	);
+    virtual void reset						(	);
+    
+protected:
+    CGContextRef	_ctx;
+    
+    bCGPDFPattern*  _fpat;
+    bCGPDFPattern*  _spat;
+private:
 };
 
 //----------------------------------------------------------------------------
