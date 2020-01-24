@@ -28,15 +28,10 @@
 //----------------------------------------------------------------------------
 
 #include "bMacMapGraphicContext.h"
-
 #include <mox_intf/bCoreTextInfo.h>
 #include <mox_intf/CGUtils.h>
-#include <mox_intf/Carb_Utils.h>
 #include <mox_intf/ext_utils.h>
-
 #include <MacMapSuite/bTrace.h>
-
-#include <QuickTime/QuickTimeComponents.h>
 
 // ---------------------------------------------------------------------------
 // Constructeur
@@ -574,7 +569,7 @@ CGImageRef bMacMapGraphicContext::getImage(){
 // ---------------------------------------------------------------------------
 // 
 // ------------
-void bMacMapGraphicContext::setDash(float* dash, int ndash, const char* name){
+void bMacMapGraphicContext::setDash(CGFloat* dash, int ndash, const char* name){
 	if(_dash){
 		delete _dash;
 		_dash=NULL;
@@ -583,8 +578,8 @@ void bMacMapGraphicContext::setDash(float* dash, int ndash, const char* name){
 	if(_ndash==0){
 		return;
 	}
-	_dash=new float[_ndash];
-	memmove(_dash,dash,ndash*sizeof(float));
+	_dash=new CGFloat[_ndash];
+	memmove(_dash,dash,ndash*sizeof(CGFloat));
 	for(int i=0;i<_ndash;i++){
 		_dash[i]*=getUnitCoef();
 		_dash[i]*=getFixConv();
@@ -594,7 +589,7 @@ void bMacMapGraphicContext::setDash(float* dash, int ndash, const char* name){
 // ---------------------------------------------------------------------------
 // 
 // ------------
-float* bMacMapGraphicContext::getDash(int* ndash){
+CGFloat* bMacMapGraphicContext::getDash(int* ndash){
 	*ndash=_ndash;
 	return(_dash);
 }

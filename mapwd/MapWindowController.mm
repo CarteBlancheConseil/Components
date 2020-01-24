@@ -34,7 +34,7 @@
 #import <mox_intf/bGenericTool.h>
 #import <mox_intf/bXMLFile.h>
 #import <mox_intf/xmldesc_utils.h>
-#import <mox_intf/Carb_Utils.h>
+#import <mox_intf/ext_utils.h>
 #import <MacMapSuite/bStdDirectory.h>
 #import <MacMapSuite/C_Utils.h>
 
@@ -42,93 +42,6 @@
 #define _fpath	"Contents/Resources/nsmapwindow.xml"
 #define _PUSH_	{
 #define _POP_	}
-
-// OLD CARBON CODE, MEMO
-//OSStatus bMapWind::evtHdlr(EventHandlerCallRef hdlr, EventRef evt, void *up){
-//	_bTrace_("bMapWind::evtHdlr",false);
-//	OSStatus	status=eventNotHandledErr;
-//	HICommand	cmd;
-//	UInt32		clss;	
-//	bMapWind*	w=(bMapWind*)up;
-//	Point		pt;
-//	UInt32		modifiers;
-//	
-//	clss=GetEventClass(evt);
-//	//_m_("%.4s",&clss);
-//...
-//	else if(clss==kEventClassWindow){
-//		//_m_("clss==kEventClassWindow");
-//		//_m_("kind==%d",GetEventKind(evt));
-//		w->set_port();
-//		switch(GetEventKind(evt)){
-//			case kEventWindowClose:	
-//				(void)xmapmgr->event(evt);
-//				(void)xboxmgr->event(evt);// AJOUT 12/02/2014
-//				(void)toolmgr->event(evt);
-//				SendCommandToApplication(kHICommandClose);
-//				break;
-//			case kEventWindowDrawContent:
-//				w->draw();
-//				(void)xmapmgr->event(evt);
-//				(void)xboxmgr->event(evt);// AJOUT 12/02/2014
-//				(void)toolmgr->event(evt);
-//				status=noErr;
-//				break;
-//...
-//			case kEventWindowResizeCompleted:
-//				SetEmptyRgn(w->_rgn); 
-//				if(GetWindowRegion(w->window(),kWindowContentRgn,w->_rgn)){
-//				}
-//				if(ChangeMouseTrackingRegion(w->_mtr,w->_rgn,NULL)){
-//				}
-//				w->reset();
-//				if(xmapmgr->event(evt)){
-//					status=noErr;
-//				}
-//				if(xboxmgr->event(evt)){// AJOUT 12/02/2014
-//					status=noErr;
-//				}
-//				if(toolmgr->event(evt)){
-//					status=noErr;
-//				}
-//				break;
-//			case kEventWindowActivated:
-//			case kEventWindowDeactivated:
-//				(void)xmapmgr->event(evt);
-//				(void)xboxmgr->event(evt);// AJOUT 12/02/2014
-//				(void)toolmgr->event(evt);
-//				break;
-//				
-//			case kEventWindowCursorChange:
-//				if(xmapmgr->event(evt)){
-//					status=noErr;
-//				}
-//				else if(xboxmgr->event(evt)){// AJOUT 12/02/2014
-//					status=noErr;
-//				}
-//				else if(toolmgr->event(evt)){
-//					status=noErr;
-//				}
-//				break;
-//				
-//			default:
-//				if(xmapmgr->event(evt)){
-//					status=noErr;
-//				}
-//				if(xboxmgr->event(evt)){// AJOUT 12/02/2014
-//					status=noErr;
-//				}
-//				if(toolmgr->event(evt)){
-//					status=noErr;
-//				}
-//				break;
-//		}
-//		w->restore_port();
-//	}
-//...
-//	
-//	return(status);
-//}
 
 // ---------------------------------------------------------------------------
 // 
@@ -224,6 +137,8 @@ _bTrace_("[bPreview setFrame]",true);
 // 
 // ------------
 -(void)setDrawPath:(bool)value{
+//_bTrace_("[bPreview setDrawPath]",false);
+//_tm_(value);
 	_dPth=value;
 }
 
@@ -320,6 +235,22 @@ _bTrace_("[bPreview redoAction]",true);
     SendCommandToApplication(kHICommandPrint);
 }
 
+// ---------------------------------------------------------------------------
+//
+// ------------
+-(void)postDrawEvent{
+NSEvent* event = [NSEvent otherEventWithType:NSEventTypeApplicationDefined
+                                    location:NSZeroPoint
+                               modifierFlags:0
+                                   timestamp:0
+                                windowNumber:0
+                                     context:nil
+                                     subtype:NSEventSubtypeDrawMap
+                                       data1:0
+                                       data2:0];
+    [NSApp postEvent:event atStart:NO];
+}
+
 #pragma mark ---- Draw ----
 // ---------------------------------------------------------------------------
 // 
@@ -329,7 +260,7 @@ _bTrace_("[bPreview drawRect]",false);
 CGRect				cgr=NSRectToCGRect(rect);
 CGContextRef		ctx;
 bGenericMacMapApp*	gapp=[_ctrlr getApp];
-		
+        
 	if(gapp==NULL){
 		return;
 	}
@@ -372,6 +303,8 @@ _tm_("drawMap:"+_drcount);
 		CGContextRestoreGState(ctx);
 		
 		_dMap=FALSE;
+        
+        [self postDrawEvent];
 	}	
 	
 	if(_dCnt){
@@ -391,24 +324,30 @@ _tm_("drawSel:"+_drcount);
 	}	
 	
 	if(_dPth){
-//_m_("drawPath");
+//_tm_("drawPath");
 		ctx=CGLayerGetContext(_pth);
 		CGContextClearRect(ctx,cgr);
 bGenericTool*	tool;
 		for(long i=1;i<=gapp->toolMgr()->count();i++){
 			tool=(bGenericTool*)(void*)gapp->toolMgr()->get(i);
 			tool->update(true);
-		}		
+		}
 		_dPth=FALSE;
 	}
 	
 NSGraphicsContext*	nsctx=[NSGraphicsContext currentContext];
 CGContextRef		cgContext=(CGContextRef)[nsctx graphicsPort];
 	
-	CGContextDrawLayerAtPoint(cgContext,CGPointMake(0,0),_map);
+    CGContextDrawLayerInRect(cgContext,cgr,_map);
+    CGContextDrawLayerInRect(cgContext,cgr,_cnt);
+    CGContextDrawLayerInRect(cgContext,cgr,_sel);
+    CGContextDrawLayerInRect(cgContext,cgr,_pth);
+
+    /*
+    CGContextDrawLayerAtPoint(cgContext,CGPointMake(0,0),_map);
 	CGContextDrawLayerAtPoint(cgContext,CGPointMake(0,0),_cnt);
 	CGContextDrawLayerAtPoint(cgContext,CGPointMake(0,0),_sel);
-	CGContextDrawLayerAtPoint(cgContext,CGPointMake(0,0),_pth);
+	CGContextDrawLayerAtPoint(cgContext,CGPointMake(0,0),_pth);*/
 }
 
 #pragma mark ---- Events ----
@@ -417,8 +356,8 @@ CGContextRef		cgContext=(CGContextRef)[nsctx graphicsPort];
 // ------------
 -(void)sendEventAll:(NSEvent*)evt{
 bGenericMacMapApp*	gapp=[_ctrlr getApp];
-	gapp->xmapMgr()->event((EventRef)[evt eventRef]);
-	gapp->xboxMgr()->event((EventRef)[evt eventRef]);
+	gapp->xmapMgr()->event(evt);
+	gapp->xboxMgr()->event(evt);
 	gapp->toolMgr()->event(evt);
 }
 
@@ -428,10 +367,10 @@ bGenericMacMapApp*	gapp=[_ctrlr getApp];
 -(void)sendEventOnly:(NSEvent*)evt{
 //_bTrace_("[bPreview sendEventOnly]",true);
 bGenericMacMapApp*	gapp=[_ctrlr getApp];
-	if(gapp->xmapMgr()->event((EventRef)[evt eventRef])){
+	if(gapp->xmapMgr()->event(evt)){
 //_tm_("caught by xmapMgr");
 	}
-	else if(gapp->xboxMgr()->event((EventRef)[evt eventRef])){
+	else if(gapp->xboxMgr()->event(evt)){
 //_tm_("caught by xboxMgr");
 	}
 	else if(gapp->toolMgr()->event(evt)){
@@ -506,16 +445,16 @@ bGenericMacMapApp*	gapp=[_ctrlr getApp];
 	if([_ctrlr getApp]==NULL){
 		return;
 	}
-	if([_ctrlr getApp]->xmapMgr()->event((EventRef)[event eventRef])){
+	if([_ctrlr getApp]->xmapMgr()->event(event)){
 	}
-	else if([_ctrlr getApp]->xboxMgr()->event((EventRef)[event eventRef])){
+	else if([_ctrlr getApp]->xboxMgr()->event(event)){
 	}
 	else if(!_dMap){
 // Voir si ca résoud tous les cas (pour éviter interruption
 // du dessin si on est en train de dessiner)
 // En mouseMoved, les tools actualisent la trace, donc provoquent des 
 // remise à jour de la nsview
-		[_ctrlr getApp]->toolMgr()->event((void*)event);
+		[_ctrlr getApp]->toolMgr()->event(event);
 	}
 }
 
@@ -619,7 +558,7 @@ bGenericMacMapApp*	gapp=[_ctrlr getApp];
 // 
 // ------------
 -(void)viewWillMoveToWindow:(NSWindow *)newWindow {
-_bTrace_("[bPreview viewWillMoveToWindow]",true);
+//_bTrace_("[bPreview viewWillMoveToWindow]",true);
 	_trck=[[NSTrackingArea alloc] initWithRect:[self bounds] 
 									   options:(NSTrackingMouseEnteredAndExited|
 												NSTrackingMouseMoved|
@@ -634,7 +573,7 @@ _bTrace_("[bPreview viewWillMoveToWindow]",true);
 // 
 // ------------
 -(void)viewWillStartLiveResize{
-_bTrace_("[bPreview viewWillStartLiveResize]",true);
+//_bTrace_("[bPreview viewWillStartLiveResize]",true);
 	[self setDrawMap:NO];
 	[self setDrawSelection:NO];
 	[self setDrawContrastes:NO];
@@ -645,7 +584,7 @@ _bTrace_("[bPreview viewWillStartLiveResize]",true);
 // 
 // ------------
 -(void)viewDidEndLiveResize{
-_bTrace_("[bPreview viewDidEndLiveResize]",true);
+//_bTrace_("[bPreview viewDidEndLiveResize]",true);
 	if([_ctrlr getApp]==NULL){
 		return;
 	}
@@ -674,7 +613,7 @@ _bTrace_("[bPreview viewDidEndLiveResize]",true);
 // 
 // ------------
 -(void)updateTrackingAreas{
-_bTrace_("[bPreview updateTrackingAreas]",true);
+//_bTrace_("[bPreview updateTrackingAreas]",true);
 	if(_trck){
 		[self removeTrackingArea:_trck];
 		[_trck release];
@@ -711,6 +650,7 @@ _bTrace_("[bPreview updateTrackingAreas]",true);
 // 
 // -----------
 -(id)init{
+_bTrace_("[MapWindow init]",true);
     self=[super init];
     if(self){
     }
@@ -798,6 +738,7 @@ MapWindowController*	mmc=(MapWindowController*)[self windowController];
 // 
 // -----------
 -(id)init{
+_bTrace_("[MapWindowController init]",true);
 	self=[self initWithWindowNibName:@"Palette"];
   	_ls=0;
 	_lc=0;
@@ -828,11 +769,18 @@ _bTrace_("[MapWindowController awakeFromNib]",true);
 // ---------------------------------------------------------------------------
 //
 // ------------
+- (void)close{
+_bTrace_("[MapWindowController close]",true);
+    [super close];
+}
+// ---------------------------------------------------------------------------
+//
+// ------------
 -(NSSize)windowWillResize:(NSWindow*)sender toSize:(NSSize)frameSize{
-_bTrace_("[MapWindowController windowWillResize]",true);
-    
-    if(frameSize.height>([[NSScreen mainScreen] frame].size.height-[NSMenuView menuBarHeight]-16)){
-        frameSize.height=[[NSScreen mainScreen] frame].size.height-[NSMenuView menuBarHeight]-16;
+CGFloat menuBarHeight = [[[NSApplication sharedApplication] mainMenu] menuBarHeight];
+
+    if(frameSize.height>([[NSScreen mainScreen] frame].size.height-menuBarHeight-16)){
+        frameSize.height=[[NSScreen mainScreen] frame].size.height-menuBarHeight-16;
     }
         
     return frameSize;
@@ -894,9 +842,11 @@ bStdDirectory	base(path);
 bXMLFile		f(_fpath,"w");
 NSRect			scr=[[NSScreen mainScreen] frame];
 ivx_rect		bnds;
+    
+CGFloat menuBarHeight = [[[NSApplication sharedApplication] mainMenu] menuBarHeight];
 	
-	scr.size.height-=([NSMenuView menuBarHeight]*3);
-	scr.origin.y+=([NSMenuView menuBarHeight]*3);
+	scr.size.height-=(menuBarHeight*3);
+	scr.origin.y+=(menuBarHeight*3);
 	
 	bnds.left=0;
 	bnds.top=0;
@@ -1157,7 +1107,9 @@ long offv=vx.v-o.v;
 // 
 // -----------
 -(void)updateUIInRect:(NSRect)rect{
-//_bTrace_("[MapWindowController updateUIInRect]",true);
+/*_bTrace_("[MapWindowController updateUIInRect]",true);
+CGRect              cgr=NSRectToCGRect(rect);
+_tm_(_trxysz_(cgr));*/
 	[_map setDrawMap:YES];
 	[_map setDrawSelection:YES];
 	[_map setDrawContrastes:YES];
@@ -1187,6 +1139,7 @@ long offv=vx.v-o.v;
 // 
 // -----------
 -(void)updatePath{
+//_bTrace_("[MapWindowController updatePath]",true);
 	[_map setDrawPath:YES];
 	[_map setNeedsDisplay:YES];
 }

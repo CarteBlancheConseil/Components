@@ -28,11 +28,9 @@
 //----------------------------------------------------------------------------
 
 #include "bCGGraphicContext.h"
-#include <mox_intf/Carb_Utils.h>
 #include <mox_intf/ext_utils.h>
 #include <mox_intf/CGUtils.h>
 #include <MacMapSuite/bTrace.h>
-#include <QuickTime/QuickTimeComponents.h>
 
 // ---------------------------------------------------------------------------
 // Constructeur
@@ -177,12 +175,12 @@ void bCGGraphicContext::setCap(int cap){
 // ---------------------------------------------------------------------------
 // 
 // ------------
-void bCGGraphicContext::setDash(float* dash, int ndash, const char* name){
+void bCGGraphicContext::setDash(CGFloat* dash, int ndash, const char* name){
 	bMacMapGraphicContext::setDash(dash,ndash,name);
 	if(!_ctx){
 		return;
 	}
-	CGContextSetLineDash(_ctx,0,_dash,_ndash);
+	CGContextSetLineDash(_ctx,0,dash,_ndash);
 }
 
 // ---------------------------------------------------------------------------
@@ -211,11 +209,11 @@ void bCGGraphicContext::setFillPattern(void* data, int sz, const char* name){
 	if(!_ctx){
 		return;
 	}
-float				color[4]={0,0,0,1};
+CGFloat				color[4]={0,0,0,1};
 CGPatternCallbacks	callbacks={0,&bCGPDFPattern::drawproc,NULL/*&bCGPDFPattern::releaseproc*/};
 CGColorSpaceRef		baseSpace=CGColorSpaceCreateDeviceRGB();
 CGColorSpaceRef		patternSpace=CGColorSpaceCreatePattern(baseSpace);
-float				cf=getUnitCoef()*getFixConv();
+CGFloat				cf=getUnitCoef()*getFixConv();
 	
     CGContextSetFillColorSpace(_ctx,patternSpace);
     CGColorSpaceRelease(patternSpace);
@@ -268,11 +266,11 @@ void bCGGraphicContext::setStrokePattern(void* data, int sz, const char* name){
 	if(!_ctx){
 		return;
 	}
-float				color[4]={0,0,0,1};
+CGFloat				color[4]={0,0,0,1};
 CGPatternCallbacks	callbacks={0,&bCGPDFPattern::drawproc,NULL/*&bCGPDFPattern::releaseproc*/};
 CGColorSpaceRef		baseSpace=CGColorSpaceCreateDeviceRGB();
 CGColorSpaceRef		patternSpace=CGColorSpaceCreatePattern(baseSpace);
-float				cf=getUnitCoef()*getFixConv();
+CGFloat				cf=getUnitCoef()*getFixConv();
 
     CGContextSetFillColorSpace(_ctx,patternSpace);
     CGColorSpaceRelease(patternSpace);
@@ -874,7 +872,8 @@ CGAffineTransform	at;
 bool			first=true;
 int				idx=0,n=0;
 CGGlyph			*cgg=_txtlayout->glyphs();
-				for(j=0;j<=_txtlayout->nGlyphs();j++){
+                for(j=0;j<=_txtlayout->nGlyphs();j++){
+//                for(j=0;j<=_txtlayout->nGlyphs();j++){
 //				for(j=0;j<_txtlayout->nGlyphs();j++){
 					c=_txtlayout->character(j);
 					if((c==13)||(c==10)||(c==32)||(j==_txtlayout->nGlyphs())){

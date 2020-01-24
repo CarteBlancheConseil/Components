@@ -135,10 +135,10 @@ public:
 	virtual CGImageRef getImage					(	);
 
 // Dash & Pattern
-	virtual void setDash						(	float* dash, 
+	virtual void setDash						(	CGFloat* dash,
 													int ndash,
 													const char* name);
-	virtual float* getDash						(	int* ndash);
+	virtual CGFloat* getDash					(	int* ndash);
 	virtual void setFillPattern					(	void* data, 
 													int sz,
 													const char* name);
@@ -274,7 +274,7 @@ protected:
 	int						_join;
 	int						_cap;
 	float					_limit;
-	float*					_dash;
+	CGFloat*				_dash;
 	int						_ndash;		
 
 	char					_fontname[256];

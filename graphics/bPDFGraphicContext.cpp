@@ -29,7 +29,6 @@
 
 #include "bPDFGraphicContext.h"
 #include <mox_intf/CGUtils.h>
-#include <mox_intf/Carb_Utils.h>
 #include <MacMapSuite/bTrace.h>
 #include <MacMapSuite/C_Utils.h>
 
@@ -85,11 +84,11 @@ void bPDFGraphicContext::setFillPattern(void* data, int sz, const char* name){
     if(!_ctx){
         return;
     }
-float				color[4]={0,0,0,1};
+CGFloat				color[4]={0,0,0,1};
 CGPatternCallbacks	callbacks={0,&bCGPDFPattern::drawproc,&bCGPDFPattern::releaseproc};
 CGColorSpaceRef		baseSpace=CGColorSpaceCreateDeviceRGB();
 CGColorSpaceRef		patternSpace=CGColorSpaceCreatePattern(baseSpace);
-float				cf=getUnitCoef()*getFixConv();
+CGFloat				cf=getUnitCoef()*getFixConv();
     
     CGContextSetFillColorSpace(_ctx,patternSpace);
     CGColorSpaceRelease(patternSpace);
@@ -137,11 +136,11 @@ void bPDFGraphicContext::setStrokePattern(void* data, int sz, const char* name){
     if(!_ctx){
         return;
     }
-float				color[4]={0,0,0,1};
+CGFloat				color[4]={0,0,0,1};
 CGPatternCallbacks	callbacks={0,&bCGPDFPattern::drawproc,&bCGPDFPattern::releaseproc};
 CGColorSpaceRef		baseSpace=CGColorSpaceCreateDeviceRGB();
 CGColorSpaceRef		patternSpace=CGColorSpaceCreatePattern(baseSpace);
-float				cf=getUnitCoef()*getFixConv();
+CGFloat				cf=getUnitCoef()*getFixConv();
     
     CGContextSetFillColorSpace(_ctx,patternSpace);
     CGColorSpaceRelease(patternSpace);

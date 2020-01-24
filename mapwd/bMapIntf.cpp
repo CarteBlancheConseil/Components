@@ -39,6 +39,7 @@
 // ------------
 bMapIntf::bMapIntf(void* gapp){	
 	_controller=NULL;
+    _doc=NULL;
 	_gapp=(bGenericMacMapApp*)gapp;
 }
 
@@ -51,9 +52,10 @@ bMapIntf::~bMapIntf(){
 // ---------------------------------------------------------------------------
 // 
 // -----------
-OSStatus bMapIntf::open(){
+OSStatus bMapIntf::open(void* cc){
 _bTrace_("bMapIntf::open()",true);
 	_controller=initializeCocoa(_gapp);
+    _doc=cc;
 	if(_controller==NULL){
 		return -1;
 	}
@@ -75,6 +77,10 @@ _bTrace_("bMapIntf::close()",true);
         }
         _controller=NULL;
 	}
+    if(_doc){
+        closeCocoaDoc(_doc);
+        _doc=NULL;
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -141,6 +147,7 @@ void bMapIntf::draw(){
 // 
 // -----------
 void bMapIntf::idle(){
+//_bTrace_("bMapIntf::idle()",true);
 	if(_controller){
 		idleCocoa(_controller);
 	}

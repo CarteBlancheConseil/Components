@@ -12,17 +12,14 @@
 		1449B50418F3123100742ED7 /* bMapIntf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1449B50318F3123100742ED7 /* bMapIntf.cpp */; };
 		14BB511B1ADFC158005CF9B6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 14BB51181ADFC158005CF9B6 /* InfoPlist.strings */; };
 		14BB511D1ADFC158005CF9B6 /* Palette.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14BB511A1ADFC158005CF9B6 /* Palette.xib */; };
+		14BEA72221919C00008B60DB /* mox_intf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14BEA72021919C00008B60DB /* mox_intf.framework */; };
+		14BEA72321919C00008B60DB /* std_ext.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14BEA72121919C00008B60DB /* std_ext.framework */; };
 		14CA54380DF964990080DF70 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14CA54360DF964990080DF70 /* main.cpp */; };
-		14E43BE419F957BE00A8CAA9 /* mox_intf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E43BE219F957BE00A8CAA9 /* mox_intf.framework */; };
-		14E43BE519F957BE00A8CAA9 /* std_ext.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E43BE319F957BE00A8CAA9 /* std_ext.framework */; };
-		14E43BE819F9587D00A8CAA9 /* MacMapStats.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E43BE619F9587D00A8CAA9 /* MacMapStats.framework */; };
 		14E43BE919F9587D00A8CAA9 /* MacMapSuite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E43BE719F9587D00A8CAA9 /* MacMapSuite.framework */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		1440B54619A4D095000E1608 /* CocoaStuff.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaStuff.mm; sourceTree = "<group>"; };
 		1449B3BD18F2F46D00742ED7 /* MapWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapWindowController.h; sourceTree = "<group>"; };
@@ -31,17 +28,15 @@
 		1449B50318F3123100742ED7 /* bMapIntf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bMapIntf.cpp; sourceTree = "<group>"; };
 		14BB51181ADFC158005CF9B6 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		14BB511A1ADFC158005CF9B6 /* Palette.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Palette.xib; sourceTree = "<group>"; };
+		14BEA72021919C00008B60DB /* mox_intf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = mox_intf.framework; path = "../../Applis/Current/MacMap®/build/Release/mox_intf.framework"; sourceTree = "<group>"; };
+		14BEA72121919C00008B60DB /* std_ext.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = std_ext.framework; path = "../../Applis/Current/MacMap®/build/Release/std_ext.framework"; sourceTree = "<group>"; };
 		14CA54360DF964990080DF70 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		14CA54370DF964990080DF70 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		14CA57C20DF973C30080DF70 /* CocoaStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaStuff.h; sourceTree = "<group>"; };
-		14E43BE219F957BE00A8CAA9 /* mox_intf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = mox_intf.framework; path = "../../Applis/Current/MacMap®/build/Release/mox_intf.framework"; sourceTree = "<group>"; };
-		14E43BE319F957BE00A8CAA9 /* std_ext.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = std_ext.framework; path = "../../Applis/Current/MacMap®/build/Release/std_ext.framework"; sourceTree = "<group>"; };
-		14E43BE619F9587D00A8CAA9 /* MacMapStats.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MacMapStats.framework; path = ../../../../../../../Library/Frameworks/MacMapStats.framework; sourceTree = "<group>"; };
 		14E43BE719F9587D00A8CAA9 /* MacMapSuite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MacMapSuite.framework; path = ../../../../../../../Library/Frameworks/MacMapSuite.framework; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* CocoaBundle_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaBundle_Prefix.pch; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* mapwd.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mapwd.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,11 +44,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14BEA72221919C00008B60DB /* mox_intf.framework in Frameworks */,
+				14BEA72321919C00008B60DB /* std_ext.framework in Frameworks */,
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
-				14E43BE419F957BE00A8CAA9 /* mox_intf.framework in Frameworks */,
-				14E43BE519F957BE00A8CAA9 /* std_ext.framework in Frameworks */,
 				14E43BE919F9587D00A8CAA9 /* MacMapSuite.framework in Frameworks */,
-				14E43BE819F9587D00A8CAA9 /* MacMapStats.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,13 +111,9 @@
 		1058C7AEFEA557BF11CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				14E43BE619F9587D00A8CAA9 /* MacMapStats.framework */,
+				14BEA72021919C00008B60DB /* mox_intf.framework */,
+				14BEA72121919C00008B60DB /* std_ext.framework */,
 				14E43BE719F9587D00A8CAA9 /* MacMapSuite.framework */,
-				14E43BE219F957BE00A8CAA9 /* mox_intf.framework */,
-				14E43BE319F957BE00A8CAA9 /* std_ext.framework */,
-				089C167FFE841241C02AAC07 /* AppKit.framework */,
-				D2F7E65807B2D6F200F64583 /* CoreData.framework */,
-				089C1672FE841209C02AAC07 /* Foundation.framework */,
 			);
 			name = "Other Frameworks";
 			sourceTree = "<group>";
@@ -222,10 +212,7 @@
 		1DEB913C08733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
+				ARCHS = "$(ARCHS_STANDARD)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
@@ -254,12 +241,13 @@
 		1DEB914008733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OBJROOT = "$(SYMROOT)";
 				PREBINDING = YES;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.12;
 				SYMROOT = build;
 			};
 			name = Release;

@@ -79,7 +79,7 @@ public:
     virtual void setMiterLimit				(	float	limit);
     virtual void setJoin					(	int	join);
     virtual void setCap						(	int	cap);
-    virtual void setDash					(	float* dash, 
+    virtual void setDash					(	CGFloat* dash,
                                                 int ndash,
                                                 const char* name);
     

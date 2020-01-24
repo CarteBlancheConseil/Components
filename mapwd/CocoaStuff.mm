@@ -137,11 +137,12 @@ NSAutoreleasePool	*localPool;
 // 
 // ------------
 void disposeCocoa(const void* instance){
+_bTrace_("disposeCocoa",true);
 MapWindowController	*controller=(MapWindowController*)instance;
 NSAutoreleasePool	*localPool;
 	
     localPool=[[NSAutoreleasePool alloc] init];        
-	[controller release];
+    [controller release];
     [localPool release];
 }
 
@@ -237,3 +238,16 @@ NSAutoreleasePool	*localPool;
     [localPool release];
 }
 
+// ---------------------------------------------------------------------------
+//
+// ------------
+void closeCocoaDoc(const void* instance){
+_bTrace_("closeCocoaDoc",true);
+NSDocument           *document=(NSDocument*)instance;
+NSAutoreleasePool    *localPool;
+    
+    localPool=[[NSAutoreleasePool alloc] init];
+    [document close];
+//    [document release];
+    [localPool release];
+}

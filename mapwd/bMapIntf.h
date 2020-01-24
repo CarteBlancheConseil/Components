@@ -43,7 +43,7 @@ public:
 	virtual ~bMapIntf				(	);
 	
 // Gestion fenêtre
-	virtual OSStatus open			(	);
+	virtual OSStatus open			(	void* cc);
 	virtual void close				(	);
 			
 	virtual CGRect bounds			(	);
@@ -78,6 +78,7 @@ protected:
 													
 private:
 	void*				_controller;
+    void*               _doc;
 	bGenericMacMapApp*	_gapp;
 };
 

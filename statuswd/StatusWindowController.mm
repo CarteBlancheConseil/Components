@@ -54,9 +54,10 @@
 				styleMask:(NSUInteger)aStyle 
 				  backing:(NSBackingStoreType)bufferingType 
 					defer:(BOOL)flag{
-NSRect		nsr=[[NSScreen mainScreen] frame];
+NSRect	nsr=[[NSScreen mainScreen] frame];
+CGFloat menuBarHeight=[[[NSApplication sharedApplication] mainMenu] menuBarHeight];
 	
-	nsr.origin.y=nsr.size.height-[NSMenuView menuBarHeight]-contentRect.size.height;	
+	nsr.origin.y=nsr.size.height-menuBarHeight-contentRect.size.height;
 	nsr.size.height=contentRect.size.height;
 	nsr.origin.x=0;
 	height=nsr.size.height;
@@ -79,9 +80,10 @@ NSRect		nsr=[[NSScreen mainScreen] frame];
 				  backing:(NSBackingStoreType)bufferingType 
 					defer:(BOOL)flag 
 				   screen:(NSScreen *)screen{
-NSRect		nsr=[[NSScreen mainScreen] frame];
+NSRect	nsr=[[NSScreen mainScreen] frame];
+CGFloat menuBarHeight=[[[NSApplication sharedApplication] mainMenu] menuBarHeight];
 	
-	nsr.origin.y=nsr.size.height-[NSMenuView menuBarHeight]-contentRect.size.height;	
+	nsr.origin.y=nsr.size.height-menuBarHeight-contentRect.size.height;
 	nsr.size.height=contentRect.size.height;
 	nsr.origin.x=0;
 	height=nsr.size.height;

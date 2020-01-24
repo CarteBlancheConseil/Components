@@ -30,7 +30,7 @@
 #include "bSVGGraphicContext.h"
 #include <mox_intf/CGUtils.h>
 #include <mox_intf/ext_utils.h>
-#include <mox_intf/Carb_Utils.h>
+#include <mox_intf/NSUIUtils.h>
 #include <std_ext/bXMapStdIntf.h>
 #include <MacMapSuite/bTrace.h>
 #include <MacMapSuite/C_Utils.h>
@@ -73,8 +73,8 @@ _te_("((data==NULL)||(sz<=0))");
         return;
     }
 void*	outdata;
-int		outsz;
-    if(PDFConvert(data,sz,kQTFileTypePNG,&outdata,&outsz)){
+size_t	outsz;
+    if(PDFConvert(data,sz,kFileTypePNG,&outdata,&outsz)){
         sprintf(_imgname,"icn_none.png");
 _te_("PDFConvert failure");
         return;
@@ -132,10 +132,9 @@ char*   pc=strrchr(imgpath,'/');
     }
 
     strcpy(_imgname,name);
-    
 char	path[PATH_MAX*3];
     sprintf(path,"%s%s",imgpath,_imgname);
-    if( (GetImageKind(name)==kQTFileTypeTIFF)   ||
+    if( (GetImageKind(name)==kFileTypeTIFF)   ||
         (GetImageKind(name)==' FIT')            ||
         (GetImageKind(name)=='TIF ')            ){
         

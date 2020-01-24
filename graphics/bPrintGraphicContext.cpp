@@ -29,7 +29,6 @@
 
 #include "bPrintGraphicContext.h"
 #include <mox_intf/CGUtils.h>
-#include <mox_intf/Carb_Utils.h>
 
 // ---------------------------------------------------------------------------
 // Constructeur

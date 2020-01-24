@@ -60,7 +60,9 @@ void*		windowRefCocoa			(const void* instance);
 int			windowActiveCocoa		(const void* instance);
 long		drawCountCocoa			(const void* instance);
 void		registerActionCocoa		(const void* instance);
-	
+
+void        closeCocoaDoc           (const void* instance);
+    
 //----------------------------------------------------------------------------
 
 #ifdef __cplusplus

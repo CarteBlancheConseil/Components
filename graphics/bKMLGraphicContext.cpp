@@ -30,7 +30,6 @@
 #include "bKMLGraphicContext.h"
 #include <mox_intf/CGUtils.h>
 #include <mox_intf/ext_utils.h>
-#include <mox_intf/Carb_Utils.h>
 #include <std_ext/bXMapStdIntf.h>
 #include <MacMapSuite/bTrace.h>
 #include <MacMapSuite/C_Utils.h>
@@ -67,13 +66,14 @@ void bKMLGraphicContext::setPDF(void* data, int sz, const char* name){
 		return;
 	}
 void*	outdata;
-int		outsz;
-	if(PDFConvert(data,sz,kQTFileTypePNG,&outdata,&outsz)){
+size_t	outsz;
+    
+	if(PDFConvert(data,sz,kFileTypePNG,&outdata,&outsz)){
 		sprintf(_icnsnm,"icn_none.png");
 		return;
 	}
 
-CGImageRef	img=CGImageCreateFromData(outdata,outsz,kQTFileTypePNG);
+CGImageRef	img=CGImageCreateFromData(outdata,outsz,kFileTypePNG);
 	if(img){
 		_icnw=CGImageGetWidth(img);
 		_icnh=CGImageGetHeight(img);
@@ -909,10 +909,10 @@ bGenericExt*		fexp=_app->xmapMgr()->find('FExp');
 
 	fprintf(_fp,"<description><![CDATA[<table border=\"0\" cellspacing=\"1\">");
 	if(fexp){
-bArray				arr(sizeof(fexp_field));
-fexp_prm			prm;
-int					fidx;
-fexp_field			fld;
+bArray      arr(sizeof(fexp_field));
+fexp_prm    prm;
+int         fidx;
+fexp_field  fld;
 
 		prm.tidx=tp->index();
 		prm.name=NULL;
@@ -954,6 +954,51 @@ fexp_field			fld;
 			fprintf(_fp,"</td></tr>");
 		}
 	}
-	fprintf(_fp,"</table>]]></description>\n");
+    fprintf(_fp,"</table>]]></description>\n");
+    
+    fprintf(_fp,"<ExtendedData>\n");
+    if(fexp){
+bArray      arr(sizeof(fexp_field));
+fexp_prm    prm;
+int         fidx;
+fexp_field  fld;
+
+            prm.tidx=tp->index();
+            prm.name=NULL;
+            prm.flds=&arr;
+            fexp->process(kExtProcessCallGetData,&prm);
+            for(int i=1;i<=arr.count();i++){
+                arr.get(i,&fld);
+                fidx=tp->fields()->get_index(fld.fid);
+                if(!fidx){
+                    continue;
+                }
+                if(strlen(fld.fname)>0){
+                    strcpy(val,fld.fname);
+                }
+                else{
+                    tp->fields()->get_name(fidx,val);
+                }
+                MacRoman2UTF8(val,sizeof(val)-1);
+                fprintf(_fp,"<Data name=\"%s\">\n",val);
+                o->getValue(fidx,val);
+                MacRoman2UTF8(val,sizeof(val)-1);
+                fprintf(_fp,"<value>%s</value>\n",val);
+                fprintf(_fp,"</Data>\n");
+            }
+        }
+        else{
+            for(int i=kOBJ_SubType_;i<=tp->fields()->count();i++){
+                tp->fields()->get_name(i,val);
+                MacRoman2UTF8(val,sizeof(val)-1);
+                fprintf(_fp,"<Data name=\"%s\">\n",val);
+                o->getValue(i,val);
+                MacRoman2UTF8(val,sizeof(val)-1);
+                fprintf(_fp,"<value>%s</value>\n",val);
+                fprintf(_fp,"</Data>\n");
+            }
+        }
+    fprintf(_fp,"</ExtendedData>\n");
+
 }
 
