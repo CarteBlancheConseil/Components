@@ -180,7 +180,7 @@ void bCGGraphicContext::setDash(CGFloat* dash, int ndash, const char* name){
 	if(!_ctx){
 		return;
 	}
-	CGContextSetLineDash(_ctx,0,dash,_ndash);
+	CGContextSetLineDash(_ctx,0,_dash,_ndash);
 }
 
 // ---------------------------------------------------------------------------
@@ -689,7 +689,7 @@ int		fspc,sspc;
 			}
 		}		
 		CGContextDrawPath(_ctx,mode);
-		delete r;
+		delete[] r;
 		
 		if((_hsize<0)||(_vsize<0)){
 			if(sspc==_rgb){
@@ -1017,7 +1017,7 @@ CGPoint*	pts=new CGPoint[npts];
 			}
 		}
 		CGContextStrokePath(_ctx);
-		delete pts;
+		delete[] pts;
 	}
 
 	boundsForLine();
@@ -1081,7 +1081,7 @@ CGPoint*	pts=new CGPoint[npts];
 			}
 		}
 		CGContextDrawPath(_ctx,mode);		
-		delete pts;
+		delete[] pts;
 	}
 
 	boundsForSurf();

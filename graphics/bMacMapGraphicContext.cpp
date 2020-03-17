@@ -1463,8 +1463,8 @@ CGAffineTransform	at=CGAffineTransformMakeRotation(_angle);
 							(_width/2.0)+(cgr.size.width/2.0)+(_bgwidth/2.0),
 							(_width/2.0)+(cgr.size.height/2.0)+(_bgwidth/2.0),
 							b);
-			delete x;
-			delete y;
+			delete[] x ;
+			delete[] y;
 		}
 		else{
 		}

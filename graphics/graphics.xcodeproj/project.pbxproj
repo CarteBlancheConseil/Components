@@ -33,10 +33,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		08FB77B2FE8417CDC02AAC07 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1413630811ECB77400203F0A /* bBitMapGraphicContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bBitMapGraphicContext.cpp; sourceTree = "<group>"; };
 		1413630911ECB77400203F0A /* bBitMapGraphicContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bBitMapGraphicContext.h; sourceTree = "<group>"; };
+		141E50D1241A15D20088EA06 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		141E50D2241A15D60088EA06 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		141E50D3241A15D90088EA06 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		142FE2650C145A8A004163E6 /* bKMLGraphicContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bKMLGraphicContext.cpp; sourceTree = "<group>"; };
 		142FE2660C145A8A004163E6 /* bKMLGraphicContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bKMLGraphicContext.h; sourceTree = "<group>"; };
 		147CA7030862FB6B00D486A0 /* lib_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lib_Prefix.pch; sourceTree = "<group>"; };
@@ -55,8 +57,6 @@
 		14BDA06608727BEA004EA1CE /* bPDFGraphicContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bPDFGraphicContext.h; sourceTree = "<group>"; };
 		14BEA72A21919D68008B60DB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		14CA06D621B187D8001B3EB6 /* mox_intf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = mox_intf.framework; path = "../../Applis/Current/MacMap®/build/Release/mox_intf.framework"; sourceTree = "<group>"; };
-		14D5C7240CD1E5B50003D1AA /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		14D758270C4DEB5100EA64F2 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		14E43BC819F952FA00A8CAA9 /* MacMapSuite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MacMapSuite.framework; path = ../../../../../../../Library/Frameworks/MacMapSuite.framework; sourceTree = "<group>"; };
 		8D01CCD10486CAD60068D4B7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D01CCD20486CAD60068D4B7 /* graphics.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = graphics.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,15 +192,12 @@
 			};
 			buildConfigurationList = 149F34EC08C2FD2200C314EB /* Build configuration list for PBXProject "graphics" */;
 			compatibilityVersion = "Xcode 2.4";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				English,
-				Japanese,
-				French,
-				German,
-				Italian,
-				Spanish,
+				fr,
+				en,
+				it,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* Select */;
 			projectDirPath = "";
@@ -255,9 +252,9 @@
 		089C167DFE841241C02AAC07 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				089C167EFE841241C02AAC07 /* English */,
-				14D758270C4DEB5100EA64F2 /* French */,
-				14D5C7240CD1E5B50003D1AA /* Italian */,
+				141E50D1241A15D20088EA06 /* fr */,
+				141E50D2241A15D60088EA06 /* en */,
+				141E50D3241A15D90088EA06 /* it */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -272,14 +269,10 @@
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
-					/Users/benoit/Encours/MacMap2005/Sources/Applis/En,
-					cours,
-					3.0.x,
-					"carbon/MacMap®XBundledXC/build/Release",
+					"$(SRCROOT)/../../Applis/Current/MacMap®/build/Release",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "$(SRCROOT)/../../Applis/Current/MacMap®/build/Release";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_TRIGRAPHS = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
@@ -319,7 +312,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				SDKROOT = macosx10.12;
 			};
 			name = Release;
