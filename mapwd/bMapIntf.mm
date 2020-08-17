@@ -28,9 +28,10 @@
 //----------------------------------------------------------------------------
 
 #include "bMapIntf.h"
-#include "CocoaStuff.h"
+//#include "CocoaStuff.h"
 #include <stdlib.h>
 #include <MacMapSuite/bTrace.h>
+#import "MapWindowController.h"
 
 #define _trcgrect_(r) "(("+r.origin.x+":"+r.origin.y+"):("+r.size.width+":"+r.size.height+"))"
 
@@ -54,7 +55,9 @@ bMapIntf::~bMapIntf(){
 // -----------
 OSStatus bMapIntf::open(void* cc){
 _bTrace_("bMapIntf::open()",true);
-	_controller=initializeCocoa(_gapp);
+    _controller=[[MapWindowController alloc] init];
+    [_controller setApp:(bGenericMacMapApp*)_gapp];
+
     _doc=cc;
 	if(_controller==NULL){
 		return -1;
@@ -70,15 +73,16 @@ _bTrace_("bMapIntf::close()",true);
 // On arrive ici si mainwindow a déjà été fermé
 	if(_controller){
         if(_gapp->document()==NULL){ // Fermeture normale
-            disposeCocoa(_controller);
+            [_controller release];
         }
         else{ // Pourquoi arriverait on ici ?
-            closeCocoa(_controller);
+            [_controller close];
         }
         _controller=NULL;
 	}
     if(_doc){
-        closeCocoaDoc(_doc);
+NSDocument  *document=(NSDocument*)_doc;
+        [document close];
         _doc=NULL;
     }
 }
@@ -100,18 +104,20 @@ void bMapIntf::setBounds(CGRect r){
 // 
 // -----------
 void bMapIntf::inval(){
+//_bTrace_("bMapIntf::inval()",true);
 	if(_controller){
-		invalCocoa(_controller);
-	}
+        [_controller updateUI];
+    }
 }
 
 // ---------------------------------------------------------------------------
 // 
 // -----------
 void bMapIntf::inval(CGRect r){
+//_bTrace_("bMapIntf::inval(CGRect)",true);
 	if(_controller){
-		invalRectCocoa(_controller,r);
-	}
+        [_controller updateUIInRect:NSRectFromCGRect(r)];
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -119,7 +125,7 @@ void bMapIntf::inval(CGRect r){
 // -----------
 void* bMapIntf::ref(){
 	if(_controller){
-		return windowRefCocoa(_controller);
+        return [_controller window];
 	}
 	return NULL;
 }
@@ -129,7 +135,7 @@ void* bMapIntf::ref(){
 // -----------
 bool bMapIntf::active(){
 	if(_controller){
-		windowActiveCocoa(_controller);
+        return [[_controller window] isVisible];
 	}
 	return false;
 }
@@ -138,8 +144,9 @@ bool bMapIntf::active(){
 // 
 // -----------
 void bMapIntf::draw(){
+//_bTrace_("bMapIntf::draw()",true);
 	if(_controller){
-		drawCocoa(_controller);
+        [_controller updateUI];
 	}
 }
 
@@ -149,7 +156,7 @@ void bMapIntf::draw(){
 void bMapIntf::idle(){
 //_bTrace_("bMapIntf::idle()",true);
 	if(_controller){
-		idleCocoa(_controller);
+        [_controller idle];
 	}
 }
 
@@ -157,27 +164,32 @@ void bMapIntf::idle(){
 // 
 // -----------
 void bMapIntf::updatePath(){
+//_bTrace_("bMapIntf::updatePath()",true);
 	if(_controller){
-		updatePathCocoa(_controller);
+        [_controller updatePath];
 	}
 }
 
 // ---------------------------------------------------------------------------
 // 
 // -----------
-CGLayerRef bMapIntf::getPathLayer(){
+/*CGLayerRef bMapIntf::getPathLayer(){
+_bTrace_("bMapIntf::getPathLayer",false);
+_tw_("DEPRECATED, returns nil");
+    return nil;
+
 	if(_controller){
-		return getPathLayerCocoa(_controller);
+		return [[_controller mainView] getPath];
 	}
 	return NULL;
-}
+}*/
 
 // ---------------------------------------------------------------------------
 // 
 // -----------
 void bMapIntf::screenCenter(i2dvertex* vx){
 	if(_controller){
-ivx_rect vxr=screenBoundsCocoa(_controller);
+ivx_rect vxr=[[_controller mainView] getIVRBounds];
 		ivr_mid(&vxr,vx);
 	}
 }
@@ -187,7 +199,7 @@ ivx_rect vxr=screenBoundsCocoa(_controller);
 // -----------
 void bMapIntf::screenTopLeft(i2dvertex* vx){
 	if(_controller){
-ivx_rect vxr=screenBoundsCocoa(_controller);
+ivx_rect vxr=[[_controller mainView] getIVRBounds];
 		vx->h=vxr.left;
 		vx->v=vxr.top;
 	}
@@ -198,7 +210,7 @@ ivx_rect vxr=screenBoundsCocoa(_controller);
 // -----------
 void bMapIntf::screenBotLeft(i2dvertex* vx){
 	if(_controller){
-ivx_rect vxr=screenBoundsCocoa(_controller);
+ivx_rect vxr=[[_controller mainView] getIVRBounds];
 		vx->h=vxr.left;
 		vx->v=vxr.bottom;
 	}
@@ -209,7 +221,7 @@ ivx_rect vxr=screenBoundsCocoa(_controller);
 // -----------
 void bMapIntf::screenBounds(ivx_rect* vxr){
 	if(_controller){
-		*vxr=screenBoundsCocoa(_controller);
+		*vxr=[[_controller mainView] getIVRBounds];
 	}
 }
 
@@ -218,7 +230,7 @@ void bMapIntf::screenBounds(ivx_rect* vxr){
 // -----------
 void bMapIntf::setScreenCenter(i2dvertex vx){
 	if(_controller){
-		setScreenCenterCocoa(_controller,vx);
+        [_controller setScreenCenter:vx];
 	}
 }
 
@@ -227,8 +239,8 @@ void bMapIntf::setScreenCenter(i2dvertex vx){
 // -----------
 void bMapIntf::reset(){
 	if(_controller){
-		resetCocoa(_controller);
-	}
+        [_controller reset];
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -236,7 +248,7 @@ void bMapIntf::reset(){
 // -----------
 long bMapIntf::drawCount(){
 	if(_controller){
-		return drawCountCocoa(_controller);
+		return [[_controller mainView] drawCount];
 	}
 	return -1;
 }
@@ -245,7 +257,8 @@ long bMapIntf::drawCount(){
 // 
 // -----------
 void bMapIntf::registerAction(){
+//_bTrace_("bMapIntf::registerAction()",true);
 	if(_controller){
-		registerActionCocoa(_controller);
+        [[_controller mainView] registerAction];
 	}
 }

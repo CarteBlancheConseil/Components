@@ -7,32 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1440B54719A4D095000E1608 /* CocoaStuff.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1440B54619A4D095000E1608 /* CocoaStuff.mm */; };
 		1449B3BF18F2F46D00742ED7 /* MapWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1449B3BE18F2F46D00742ED7 /* MapWindowController.mm */; };
-		1449B50418F3123100742ED7 /* bMapIntf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1449B50318F3123100742ED7 /* bMapIntf.cpp */; };
+		1449B50418F3123100742ED7 /* bMapIntf.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1449B50318F3123100742ED7 /* bMapIntf.mm */; };
 		14BB511B1ADFC158005CF9B6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 14BB51181ADFC158005CF9B6 /* InfoPlist.strings */; };
 		14BB511D1ADFC158005CF9B6 /* Palette.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14BB511A1ADFC158005CF9B6 /* Palette.xib */; };
 		14BEA72221919C00008B60DB /* mox_intf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14BEA72021919C00008B60DB /* mox_intf.framework */; };
 		14BEA72321919C00008B60DB /* std_ext.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14BEA72121919C00008B60DB /* std_ext.framework */; };
-		14CA54380DF964990080DF70 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14CA54360DF964990080DF70 /* main.cpp */; };
+		14CA54380DF964990080DF70 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 14CA54360DF964990080DF70 /* main.mm */; };
 		14E43BE919F9587D00A8CAA9 /* MacMapSuite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E43BE719F9587D00A8CAA9 /* MacMapSuite.framework */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		1440B54619A4D095000E1608 /* CocoaStuff.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaStuff.mm; sourceTree = "<group>"; };
 		1449B3BD18F2F46D00742ED7 /* MapWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapWindowController.h; sourceTree = "<group>"; };
 		1449B3BE18F2F46D00742ED7 /* MapWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MapWindowController.mm; sourceTree = "<group>"; };
 		1449B50218F3122A00742ED7 /* bMapIntf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bMapIntf.h; sourceTree = "<group>"; };
-		1449B50318F3123100742ED7 /* bMapIntf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bMapIntf.cpp; sourceTree = "<group>"; };
+		1449B50318F3123100742ED7 /* bMapIntf.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = bMapIntf.mm; sourceTree = "<group>"; };
 		14BB51181ADFC158005CF9B6 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		14BB511A1ADFC158005CF9B6 /* Palette.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Palette.xib; sourceTree = "<group>"; };
 		14BEA72021919C00008B60DB /* mox_intf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = mox_intf.framework; path = "../../Applis/Current/MacMap®/build/Release/mox_intf.framework"; sourceTree = "<group>"; };
 		14BEA72121919C00008B60DB /* std_ext.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = std_ext.framework; path = "../../Applis/Current/MacMap®/build/Release/std_ext.framework"; sourceTree = "<group>"; };
-		14CA54360DF964990080DF70 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		14CA54360DF964990080DF70 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		14CA54370DF964990080DF70 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
-		14CA57C20DF973C30080DF70 /* CocoaStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaStuff.h; sourceTree = "<group>"; };
 		14E43BE719F9587D00A8CAA9 /* MacMapSuite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MacMapSuite.framework; path = ../../../../../../../Library/Frameworks/MacMapSuite.framework; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* CocoaBundle_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaBundle_Prefix.pch; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* mapwd.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mapwd.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,12 +87,10 @@
 			children = (
 				1449B3BD18F2F46D00742ED7 /* MapWindowController.h */,
 				1449B3BE18F2F46D00742ED7 /* MapWindowController.mm */,
-				14CA57C20DF973C30080DF70 /* CocoaStuff.h */,
-				1440B54619A4D095000E1608 /* CocoaStuff.mm */,
 				1449B50218F3122A00742ED7 /* bMapIntf.h */,
-				1449B50318F3123100742ED7 /* bMapIntf.cpp */,
+				1449B50318F3123100742ED7 /* bMapIntf.mm */,
 				14CA54370DF964990080DF70 /* main.h */,
-				14CA54360DF964990080DF70 /* main.cpp */,
+				14CA54360DF964990080DF70 /* main.mm */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -199,10 +194,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14CA54380DF964990080DF70 /* main.cpp in Sources */,
+				14CA54380DF964990080DF70 /* main.mm in Sources */,
 				1449B3BF18F2F46D00742ED7 /* MapWindowController.mm in Sources */,
-				1449B50418F3123100742ED7 /* bMapIntf.cpp in Sources */,
-				1440B54719A4D095000E1608 /* CocoaStuff.mm in Sources */,
+				1449B50418F3123100742ED7 /* bMapIntf.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

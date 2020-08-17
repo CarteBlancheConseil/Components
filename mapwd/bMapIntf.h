@@ -34,6 +34,7 @@
 
 #include <mox_intf/bGenericMapIntf.h>
 #include <mox_intf/bGenericMacMapApp.h>
+#import "MapWindowController.h"
 
 //----------------------------------------------------------------------------
 
@@ -60,7 +61,7 @@ public:
 	virtual void draw				(	);
 	virtual void idle				(	);
 	virtual void updatePath			(	);
-	virtual CGLayerRef getPathLayer	(	);
+//	virtual CGLayerRef getPathLayer	(	);
 	
 	virtual void screenCenter		(	i2dvertex* vx);
 	virtual void screenTopLeft		(	i2dvertex* vx);
@@ -77,9 +78,9 @@ public:
 protected:
 													
 private:
-	void*				_controller;
-    void*               _doc;
-	bGenericMacMapApp*	_gapp;
+	MapWindowController*    _controller;
+    void*                   _doc;
+	bGenericMacMapApp*	    _gapp;
 };
 
 //----------------------------------------------------------------------------

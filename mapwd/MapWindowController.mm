@@ -35,6 +35,9 @@
 #import <mox_intf/bXMLFile.h>
 #import <mox_intf/xmldesc_utils.h>
 #import <mox_intf/ext_utils.h>
+
+#import <mox_intf/MacMapCWrappers.h>
+
 #import <MacMapSuite/bStdDirectory.h>
 #import <MacMapSuite/C_Utils.h>
 
@@ -59,15 +62,15 @@ _bTrace_("[bPreview initWithFrame]",true);
 	_map=NULL;
 	_sel=NULL;
 	_cnt=NULL;
-	_pth=NULL;
-	
+//	_pth=NULL;
+
 	_dMap=false;
 	_dSel=false;
 	_dCnt=false;
 	_dPth=false;
 	
 	_drcount=0;
-			
+
 _tm_((void*)self);
 	return self;
 }
@@ -154,13 +157,6 @@ _bTrace_("[bPreview setFrame]",true);
 // ------------
 -(ivx_rect)getIVRBounds{
 	return _ivrbnds;
-}
-
-// ---------------------------------------------------------------------------
-// 
-// ------------
--(CGLayerRef)getPath{
-	return(_pth);
 }
 
 // ---------------------------------------------------------------------------
@@ -253,33 +249,37 @@ NSEvent* event = [NSEvent otherEventWithType:NSEventTypeApplicationDefined
 
 #pragma mark ---- Draw ----
 // ---------------------------------------------------------------------------
-// 
+//
 // ------------
 -(void)drawRect:(NSRect)rect{
 _bTrace_("[bPreview drawRect]",false);
 CGRect				cgr=NSRectToCGRect(rect);
 CGContextRef		ctx;
 bGenericMacMapApp*	gapp=[_ctrlr getApp];
-        
+
 	if(gapp==NULL){
 		return;
 	}
-	
+
+    if([self inLiveResize]){
+        return;
+    }
+    
 	if(_map==NULL){
 _tm_("_map==NULL -> Init Layers");
-NSGraphicsContext* windowContext = [NSGraphicsContext graphicsContextWithWindow:[self window]];
-		ctx=(CGContextRef)[windowContext graphicsPort];
+        ctx=[[NSGraphicsContext graphicsContextWithWindow:[self window]] CGContext];
+                
 		_map=CGLayerCreateWithContext(ctx,cgr.size,NULL);
 		_cnt=CGLayerCreateWithContext(ctx,cgr.size,NULL);
 		_sel=CGLayerCreateWithContext(ctx,cgr.size,NULL);
-		_pth=CGLayerCreateWithContext(ctx,cgr.size,NULL);
+//		_pth=CGLayerCreateWithContext(ctx,cgr.size,NULL);
 	}
-			
+    
 	if(_dMap){
 		_drcount++;
 _tm_("drawMap:"+_drcount);
-		ctx=CGLayerGetContext(_map);
-		
+        ctx=CGLayerGetContext(_map);
+        
 		CGContextSaveGState(ctx);
 		CGContextClipToRect(ctx,cgr);
 		
@@ -292,62 +292,52 @@ _tm_("drawMap:"+_drcount);
 		gapp->layersMgr()->DrawLayers(NULL,&_ivrbnds);
 		gapp->layersMgr()->SwitchContext(kCGGraphicContext,NULL);
 
-//		CGContextSetRGBFillColor(ctx,0,0,0,1);
-//		CGContextSelectFont(ctx,"Geneva",9,kCGEncodingMacRoman);
-//		CGContextSetTextDrawingMode(ctx,kCGTextFill);		
-//char			str[256];
-//		sprintf(str,"ecran nb %d",_drcount);
-//bCoreTextInfo	txt("Geneva",9,0,0,0,str);
-//		CGContextShowGlyphsAtPoint(ctx,10,10,txt.glyphs(),txt.nGlyphs());
-
 		CGContextRestoreGState(ctx);
-		
-		_dMap=FALSE;
-        
+		        
         [self postDrawEvent];
 	}	
 	
 	if(_dCnt){
 _tm_("drawContrastes:"+_drcount);
-		ctx=CGLayerGetContext(_cnt);
+        ctx=CGLayerGetContext(_cnt);
 		CGContextClearRect(ctx,cgr);
-		gapp->layersMgr()->DrawContrastes(ctx,NULL);
-		_dCnt=FALSE;
+        if(gapp->cntMgr()->count()>0){
+            gapp->layersMgr()->DrawContrastes(ctx,NULL);
+        }
 	}
 	
 	if(_dSel){
 _tm_("drawSel:"+_drcount);
-		ctx=CGLayerGetContext(_sel);
-		CGContextClearRect(ctx,cgr);
-		gapp->layersMgr()->DrawSelection(ctx,NULL);
-		_dSel=FALSE;
-	}	
-	
-	if(_dPth){
-//_tm_("drawPath");
-		ctx=CGLayerGetContext(_pth);
-		CGContextClearRect(ctx,cgr);
-bGenericTool*	tool;
-		for(long i=1;i<=gapp->toolMgr()->count();i++){
-			tool=(bGenericTool*)(void*)gapp->toolMgr()->get(i);
-			tool->update(true);
-		}
-		_dPth=FALSE;
+        ctx=CGLayerGetContext(_sel);
+        CGContextClearRect(ctx,cgr);
+        if(gapp->selMgr()->count()>0){
+            gapp->layersMgr()->DrawSelection(ctx,NULL);
+        }
 	}
-	
-NSGraphicsContext*	nsctx=[NSGraphicsContext currentContext];
-CGContextRef		cgContext=(CGContextRef)[nsctx graphicsPort];
-	
-    CGContextDrawLayerInRect(cgContext,cgr,_map);
-    CGContextDrawLayerInRect(cgContext,cgr,_cnt);
-    CGContextDrawLayerInRect(cgContext,cgr,_sel);
-    CGContextDrawLayerInRect(cgContext,cgr,_pth);
 
-    /*
-    CGContextDrawLayerAtPoint(cgContext,CGPointMake(0,0),_map);
-	CGContextDrawLayerAtPoint(cgContext,CGPointMake(0,0),_cnt);
-	CGContextDrawLayerAtPoint(cgContext,CGPointMake(0,0),_sel);
-	CGContextDrawLayerAtPoint(cgContext,CGPointMake(0,0),_pth);*/
+
+    ctx=[[NSGraphicsContext currentContext] CGContext];
+
+    CGContextDrawLayerInRect(ctx,cgr,_map);
+    if(gapp->cntMgr()->count()>0){
+        CGContextDrawLayerInRect(ctx,cgr,_cnt);
+    }
+    if(gapp->selMgr()->count()>0){
+        CGContextDrawLayerInRect(ctx,cgr,_sel);
+    }
+    
+    if(_dPth){
+bGenericTool*    tool;
+        for(long i=1;i<=gapp->toolMgr()->count();i++){
+            tool=(bGenericTool*)(void*)gapp->toolMgr()->get(i);
+            tool->update(true);
+        }
+    }
+    
+    _dMap=NO;
+    _dCnt=NO;
+    _dSel=NO;
+    _dPth=NO;
 }
 
 #pragma mark ---- Events ----
@@ -573,7 +563,7 @@ bGenericMacMapApp*	gapp=[_ctrlr getApp];
 // 
 // ------------
 -(void)viewWillStartLiveResize{
-//_bTrace_("[bPreview viewWillStartLiveResize]",true);
+_bTrace_("[bPreview viewWillStartLiveResize]",true);
 	[self setDrawMap:NO];
 	[self setDrawSelection:NO];
 	[self setDrawContrastes:NO];
@@ -584,7 +574,7 @@ bGenericMacMapApp*	gapp=[_ctrlr getApp];
 // 
 // ------------
 -(void)viewDidEndLiveResize{
-//_bTrace_("[bPreview viewDidEndLiveResize]",true);
+_bTrace_("[bPreview viewDidEndLiveResize]",true);
 	if([_ctrlr getApp]==NULL){
 		return;
 	}
@@ -594,13 +584,13 @@ bGenericMacMapApp*	gapp=[_ctrlr getApp];
 	CGLayerRelease(_map);
 	CGLayerRelease(_sel);
 	CGLayerRelease(_cnt);
-	CGLayerRelease(_pth);
-	
-	_map=NULL;
-	_sel=NULL;
-	_cnt=NULL;
-	_pth=NULL;
-	
+//    CGLayerRelease(_pth);
+    
+    _map=NULL;
+    _sel=NULL;
+    _cnt=NULL;
+//    _pth=NULL;
+    
 	[self setDrawMap:YES];
 	[self setDrawSelection:YES];
 	[self setDrawContrastes:YES];
@@ -613,7 +603,7 @@ bGenericMacMapApp*	gapp=[_ctrlr getApp];
 // 
 // ------------
 -(void)updateTrackingAreas{
-//_bTrace_("[bPreview updateTrackingAreas]",true);
+_bTrace_("[bPreview updateTrackingAreas]",true);
 	if(_trck){
 		[self removeTrackingArea:_trck];
 		[_trck release];
@@ -632,9 +622,10 @@ bGenericMacMapApp*	gapp=[_ctrlr getApp];
 // ---------------------------------------------------------------------------
 // 
 // ------------
-//-(BOOL)inLiveResize{
-//_bTrace_("[bPreview inLiveResize]",true);
-//}
+/*-(BOOL)inLiveResize{
+_bTrace_("[bPreview inLiveResize]",true);
+    return NO;
+}*/
 
 // ---------------------------------------------------------------------------
 // 
@@ -1095,11 +1086,9 @@ long offv=vx.v-o.v;
 // 
 // -----------
 -(void)updateUI{
-//_bTrace_("[MapWindowController updateUI]",true);
 	[_map setDrawMap:YES];
 	[_map setDrawSelection:YES];
 	[_map setDrawContrastes:YES];
-//	[_map setDrawPath:YES];
 	[_map setNeedsDisplay:YES];
 }
 
@@ -1107,13 +1096,9 @@ long offv=vx.v-o.v;
 // 
 // -----------
 -(void)updateUIInRect:(NSRect)rect{
-/*_bTrace_("[MapWindowController updateUIInRect]",true);
-CGRect              cgr=NSRectToCGRect(rect);
-_tm_(_trxysz_(cgr));*/
 	[_map setDrawMap:YES];
 	[_map setDrawSelection:YES];
 	[_map setDrawContrastes:YES];
-//	[_map setDrawPath:YES];
 	[_map setNeedsDisplayInRect:rect];
 }
 
@@ -1121,7 +1106,6 @@ _tm_(_trxysz_(cgr));*/
 // 
 // -----------
 -(void)updateSelection{
-//_bTrace_("[MapWindowController updateSelection]",true);
 	[_map setDrawSelection:YES];
 	[_map setNeedsDisplay:YES];
 }
@@ -1130,7 +1114,6 @@ _tm_(_trxysz_(cgr));*/
 // 
 // -----------
 -(void)updateContrastes{
-//_bTrace_("[MapWindowController updateContrastes]",true);
 	[_map setDrawContrastes:YES];
 	[_map setNeedsDisplay:YES];
 }
@@ -1139,7 +1122,6 @@ _tm_(_trxysz_(cgr));*/
 // 
 // -----------
 -(void)updatePath{
-//_bTrace_("[MapWindowController updatePath]",true);
 	[_map setDrawPath:YES];
 	[_map setNeedsDisplay:YES];
 }

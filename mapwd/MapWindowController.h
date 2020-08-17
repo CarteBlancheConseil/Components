@@ -38,11 +38,12 @@
 
 @interface bPreview : NSView{
 	MapWindowController*	_ctrlr;
+    
 	CGLayerRef				_map;
 	CGLayerRef				_cnt;
 	CGLayerRef				_sel;
-	CGLayerRef				_pth;
-	
+//	CGLayerRef				_pth;
+    
 	NSTrackingArea*			_trck;
 	
 	bool					_dMap;
@@ -69,7 +70,6 @@
 
 -(void)setIVRBounds:(ivx_rect)bnds;
 -(ivx_rect)getIVRBounds;
--(CGLayerRef)getPath;
 -(long)drawCount;
 
 -(void)registerAction;

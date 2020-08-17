@@ -36,12 +36,12 @@
 // ------------
 void* initializeCocoa(void* gapp){
 MapWindowController	*controller;
-NSAutoreleasePool	*localPool;
+//NSAutoreleasePool    *localPool;
 	
-    localPool=[[NSAutoreleasePool alloc] init];   
+    //localPool=[[NSAutoreleasePool alloc] init];
     controller=[[MapWindowController alloc] init];
 	[controller setApp:(bGenericMacMapApp*)gapp];
-    [localPool release];
+    //[localPool release];
     return((void*)controller);
 }
 
@@ -50,11 +50,11 @@ NSAutoreleasePool	*localPool;
 // ------------
 void drawCocoa(const void* instance){
 MapWindowController	*controller=(MapWindowController*)instance;
-NSAutoreleasePool	*localPool;
+//NSAutoreleasePool    *localPool;
 	
-    localPool=[[NSAutoreleasePool alloc] init];   
+    //localPool=[[NSAutoreleasePool alloc] init];
 	[controller updateUI];
-    [localPool release];
+    //[localPool release];
 }
 
 // ---------------------------------------------------------------------------
@@ -62,11 +62,11 @@ NSAutoreleasePool	*localPool;
 // ------------
 void idleCocoa(const void* instance){
 MapWindowController	*controller=(MapWindowController*)instance;
-NSAutoreleasePool	*localPool;
+//NSAutoreleasePool    *localPool;
 	
-    localPool=[[NSAutoreleasePool alloc] init];   
+    //localPool=[[NSAutoreleasePool alloc] init];
 	[controller idle];
-    [localPool release];
+    //[localPool release];
 }
 
 // ---------------------------------------------------------------------------
@@ -74,11 +74,11 @@ NSAutoreleasePool	*localPool;
 // ------------
 void invalCocoa(const void* instance){
 MapWindowController	*controller=(MapWindowController*)instance;
-NSAutoreleasePool	*localPool;
+//NSAutoreleasePool    *localPool;
 	
-    localPool=[[NSAutoreleasePool alloc] init];   
+    //localPool=[[NSAutoreleasePool alloc] init];
 	[controller updateUI];
-    [localPool release];
+    //[localPool release];
 }
 
 // ---------------------------------------------------------------------------
@@ -87,11 +87,11 @@ NSAutoreleasePool	*localPool;
 void invalRectCocoa(const void* instance,
 					CGRect r){
 MapWindowController	*controller=(MapWindowController*)instance;
-NSAutoreleasePool	*localPool;
+//NSAutoreleasePool    *localPool;
 	
-    localPool=[[NSAutoreleasePool alloc] init];   
+    //localPool=[[NSAutoreleasePool alloc] init];
 	[controller updateUIInRect:NSRectFromCGRect(r)];
-    [localPool release];
+    //[localPool release];
 }
 
 // ---------------------------------------------------------------------------
@@ -99,11 +99,11 @@ NSAutoreleasePool	*localPool;
 // ------------
 void updatePathCocoa(const void* instance){
 MapWindowController	*controller=(MapWindowController*)instance;
-NSAutoreleasePool	*localPool;
+////NSAutoreleasePool    *localPool;
 	
-    localPool=[[NSAutoreleasePool alloc] init];   
+//    //localPool=[[NSAutoreleasePool alloc] init];
 	[controller updatePath];
-    [localPool release];
+//    //[localPool release];
 }
 
 // ---------------------------------------------------------------------------
@@ -112,12 +112,12 @@ NSAutoreleasePool	*localPool;
 
 CGLayerRef getPathLayerCocoa(const void* instance){
 MapWindowController	*controller=(MapWindowController*)instance;
-NSAutoreleasePool	*localPool;
+//NSAutoreleasePool    *localPool;
 CGLayerRef			ret;
 	
-    localPool=[[NSAutoreleasePool alloc] init];   
+    //localPool=[[NSAutoreleasePool alloc] init];
 	ret=[[controller mainView] getPath];
-    [localPool release];
+    //[localPool release];
 	return(ret);
 }
 
@@ -126,11 +126,11 @@ CGLayerRef			ret;
 // ------------
 void closeCocoa(const void* instance){
 MapWindowController	*controller=(MapWindowController*)instance;
-NSAutoreleasePool	*localPool;
+//NSAutoreleasePool    *localPool;
 	
-    localPool=[[NSAutoreleasePool alloc] init];        
+    //localPool=[[NSAutoreleasePool alloc] init];
 	[controller close];
-    [localPool release];
+    //[localPool release];
 }
 
 // ---------------------------------------------------------------------------
@@ -139,11 +139,11 @@ NSAutoreleasePool	*localPool;
 void disposeCocoa(const void* instance){
 _bTrace_("disposeCocoa",true);
 MapWindowController	*controller=(MapWindowController*)instance;
-NSAutoreleasePool	*localPool;
+//NSAutoreleasePool    *localPool;
 	
-    localPool=[[NSAutoreleasePool alloc] init];        
+    //localPool=[[NSAutoreleasePool alloc] init];
     [controller release];
-    [localPool release];
+    //[localPool release];
 }
 
 // ---------------------------------------------------------------------------
@@ -151,11 +151,11 @@ NSAutoreleasePool	*localPool;
 // ------------
 void resetCocoa(const void* instance){
 MapWindowController	*controller=(MapWindowController*)instance;
-NSAutoreleasePool	*localPool;
+//NSAutoreleasePool    *localPool;
 	
-    localPool=[[NSAutoreleasePool alloc] init];        
+    //localPool=[[NSAutoreleasePool alloc] init];
 	[controller reset];
-    [localPool release];
+    //[localPool release];
 }
 
 // ---------------------------------------------------------------------------
@@ -163,11 +163,11 @@ NSAutoreleasePool	*localPool;
 // ------------
 ivx_rect screenBoundsCocoa(const void* instance){
 MapWindowController	*controller=(MapWindowController*)instance;
-NSAutoreleasePool	*localPool;
+//NSAutoreleasePool    *localPool;
 	
-    localPool=[[NSAutoreleasePool alloc] init];        
+    //localPool=[[NSAutoreleasePool alloc] init];
 ivx_rect	vxr=[[controller mainView] getIVRBounds];
-    [localPool release];
+    //[localPool release];
 	return vxr;
 }
 
@@ -177,11 +177,11 @@ ivx_rect	vxr=[[controller mainView] getIVRBounds];
 void setScreenCenterCocoa(const void* instance,
 						  i2dvertex vx){
 MapWindowController	*controller=(MapWindowController*)instance;
-NSAutoreleasePool	*localPool;
+//NSAutoreleasePool    *localPool;
 	
-    localPool=[[NSAutoreleasePool alloc] init];        
+    //localPool=[[NSAutoreleasePool alloc] init];
 	[controller setScreenCenter:vx];
-    [localPool release];
+    //[localPool release];
 }
 
 // ---------------------------------------------------------------------------
@@ -189,11 +189,11 @@ NSAutoreleasePool	*localPool;
 // ------------
 void* windowRefCocoa(const void* instance){
 MapWindowController	*controller=(MapWindowController*)instance;
-NSAutoreleasePool	*localPool;
+//NSAutoreleasePool    *localPool;
 	
-    localPool=[[NSAutoreleasePool alloc] init];        
+    //localPool=[[NSAutoreleasePool alloc] init];
 void* ref=[controller window];
-    [localPool release];
+    //[localPool release];
 	return ref;
 }
 
@@ -203,12 +203,12 @@ void* ref=[controller window];
 int windowActiveCocoa(const void* instance){
 //_bTrace_("[CocoaStuff windowActiveCocoa]",true);
 MapWindowController	*controller=(MapWindowController*)instance;
-NSAutoreleasePool	*localPool;
+//NSAutoreleasePool    *localPool;
 
-    localPool=[[NSAutoreleasePool alloc] init];        
+    //localPool=[[NSAutoreleasePool alloc] init];
 BOOL ret=[[controller window] isVisible];
 //_m_("visible :"+[[controller window] isVisible]+"key :"+[[controller window] isKeyWindow]+"main :"+[[controller window] isMainWindow]);
-    [localPool release];
+    //[localPool release];
 	return ret;
 }
 
@@ -218,11 +218,11 @@ BOOL ret=[[controller window] isVisible];
 long drawCountCocoa(const void* instance){
 //_bTrace_("[CocoaStuff drawCountCocoa]",true);
 MapWindowController	*controller=(MapWindowController*)instance;
-NSAutoreleasePool	*localPool;
+//NSAutoreleasePool    *localPool;
 	
-    localPool=[[NSAutoreleasePool alloc] init];        
+    //localPool=[[NSAutoreleasePool alloc] init];
 long ret=[[controller mainView] drawCount];
-    [localPool release];
+    //[localPool release];
 	return ret;
 }
 
@@ -231,11 +231,11 @@ long ret=[[controller mainView] drawCount];
 // ------------
 void registerActionCocoa(const void* instance){
 MapWindowController	*controller=(MapWindowController*)instance;
-NSAutoreleasePool	*localPool;
+//NSAutoreleasePool    *localPool;
 	
-    localPool=[[NSAutoreleasePool alloc] init];        
+    //localPool=[[NSAutoreleasePool alloc] init];
 	[[controller mainView] registerAction];
-    [localPool release];
+    //[localPool release];
 }
 
 // ---------------------------------------------------------------------------
@@ -246,8 +246,8 @@ _bTrace_("closeCocoaDoc",true);
 NSDocument           *document=(NSDocument*)instance;
 NSAutoreleasePool    *localPool;
     
-    localPool=[[NSAutoreleasePool alloc] init];
+    //localPool=[[NSAutoreleasePool alloc] init];
     [document close];
 //    [document release];
-    [localPool release];
+    //[localPool release];
 }
