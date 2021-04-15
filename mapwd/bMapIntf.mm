@@ -28,7 +28,6 @@
 //----------------------------------------------------------------------------
 
 #include "bMapIntf.h"
-//#include "CocoaStuff.h"
 #include <stdlib.h>
 #include <MacMapSuite/bTrace.h>
 #import "MapWindowController.h"
@@ -164,25 +163,20 @@ void bMapIntf::idle(){
 // 
 // -----------
 void bMapIntf::updatePath(){
-//_bTrace_("bMapIntf::updatePath()",true);
 	if(_controller){
         [_controller updatePath];
 	}
 }
 
 // ---------------------------------------------------------------------------
-// 
+//
 // -----------
-/*CGLayerRef bMapIntf::getPathLayer(){
-_bTrace_("bMapIntf::getPathLayer",false);
-_tw_("DEPRECATED, returns nil");
-    return nil;
-
-	if(_controller){
-		return [[_controller mainView] getPath];
-	}
-	return NULL;
-}*/
+CGContextRef bMapIntf::getPathContext(){
+    if(_controller){
+        return [[_controller mainView] getPath];
+    }
+    return NULL;
+}
 
 // ---------------------------------------------------------------------------
 // 

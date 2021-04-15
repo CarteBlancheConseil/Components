@@ -36,14 +36,14 @@
 
 //----------------------------------------------------------------------------
 
-@interface bPreview : NSView{
+@interface bPreview : NSView <CALayerDelegate> {
 	MapWindowController*	_ctrlr;
-    
-	CGLayerRef				_map;
-	CGLayerRef				_cnt;
-	CGLayerRef				_sel;
-//	CGLayerRef				_pth;
-    
+
+    CALayer*                _amap;
+    CALayer*                _acnt;
+    CALayer*                _asel;
+    CALayer*                _apth;
+
 	NSTrackingArea*			_trck;
 	
 	bool					_dMap;
@@ -57,6 +57,11 @@
 	ivx_rect				_ivrbnds;
 	
 	long					_drcount;
+    
+    long                    _call;
+    
+    CGContextRef            _cur;
+    
 }
 
 //----------------------------------------------------------------------------
@@ -76,6 +81,9 @@
 -(void)undoAction:(NSObject*)target;
 -(void)redoAction:(NSObject*)target;
 -(void)print:(id)sender;
+
+-(void)addLayers;
+-(CGContextRef)getPath;
 
 //----------------------------------------------------------------------------
 

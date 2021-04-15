@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		141F6C6426247A3400F861CD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141F6C6326247A3400F861CD /* QuartzCore.framework */; };
 		1449B3BF18F2F46D00742ED7 /* MapWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1449B3BE18F2F46D00742ED7 /* MapWindowController.mm */; };
 		1449B50418F3123100742ED7 /* bMapIntf.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1449B50318F3123100742ED7 /* bMapIntf.mm */; };
 		14BB511B1ADFC158005CF9B6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 14BB51181ADFC158005CF9B6 /* InfoPlist.strings */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		141F6C6326247A3400F861CD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1449B3BD18F2F46D00742ED7 /* MapWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapWindowController.h; sourceTree = "<group>"; };
 		1449B3BE18F2F46D00742ED7 /* MapWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MapWindowController.mm; sourceTree = "<group>"; };
 		1449B50218F3122A00742ED7 /* bMapIntf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bMapIntf.h; sourceTree = "<group>"; };
@@ -41,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				141F6C6426247A3400F861CD /* QuartzCore.framework in Frameworks */,
 				14BEA72221919C00008B60DB /* mox_intf.framework in Frameworks */,
 				14BEA72321919C00008B60DB /* std_ext.framework in Frameworks */,
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
@@ -66,6 +69,7 @@
 		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				141F6C6226247A3400F861CD /* Frameworks */,
 				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
 				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
 			);
@@ -111,6 +115,14 @@
 				14E43BE719F9587D00A8CAA9 /* MacMapSuite.framework */,
 			);
 			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		141F6C6226247A3400F861CD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				141F6C6326247A3400F861CD /* QuartzCore.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {

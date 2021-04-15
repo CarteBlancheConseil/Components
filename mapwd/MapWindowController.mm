@@ -38,6 +38,8 @@
 
 #import <mox_intf/MacMapCWrappers.h>
 
+#import <mox_intf/bitmap_utils.h>
+
 #import <MacMapSuite/bStdDirectory.h>
 #import <MacMapSuite/C_Utils.h>
 
@@ -58,11 +60,11 @@
 _bTrace_("[bPreview initWithFrame]",true);
 	if((self=[super initWithFrame:frameRect])!=nil){
 	}
-	
-	_map=NULL;
-	_sel=NULL;
-	_cnt=NULL;
-//	_pth=NULL;
+    
+    _amap=NULL;
+    _asel=NULL;
+    _acnt=NULL;
+    _apth=NULL;
 
 	_dMap=false;
 	_dSel=false;
@@ -70,7 +72,11 @@ _bTrace_("[bPreview initWithFrame]",true);
 	_dPth=false;
 	
 	_drcount=0;
+   
+    _cur=NULL;
 
+    [self setWantsLayer:TRUE];
+    
 _tm_((void*)self);
 	return self;
 }
@@ -110,8 +116,41 @@ _bTrace_("[bPreview setFrame]",true);
 // 
 // ------------
 -(void)installController:(MapWindowController*)controller{
+_bTrace_("[bPreview installController]",true);
 	_ctrlr=controller;
 	[[self undoManager] setLevelsOfUndo:1];
+            
+    _amap=[[CALayer alloc] initWithLayer:[self layer]];
+    [_amap setDelegate:[[self layer] delegate]];
+    [_amap setBounds:[[self layer] bounds]];
+    [_amap setFrame:[[self layer] frame]];
+    [[self layer] addSublayer:_amap];
+
+    _asel=[[CALayer alloc] initWithLayer:[self layer]];
+    [_asel setDelegate:[[self layer] delegate]];
+    [_asel setBounds:[[self layer] bounds]];
+    [_asel setFrame:[[self layer] frame]];
+    [[self layer] addSublayer:_asel];
+    
+    _acnt=[[CALayer alloc] initWithLayer:[self layer]];
+    [_acnt setDelegate:[[self layer] delegate]];
+    [_acnt setBounds:[[self layer] bounds]];
+    [_acnt setFrame:[[self layer] frame]];
+    [[self layer] addSublayer:_acnt];
+    
+    _apth=[[CALayer alloc] initWithLayer:[self layer]];
+    [_apth setDelegate:[[self layer] delegate]];
+    [_apth setBounds:[[self layer] bounds]];
+    [_apth setFrame:[[self layer] frame]];
+    [[self layer] addSublayer:_apth];
+    
+//_tm_("layer="+(long)[self layer]);
+//_tm_("_amap="+(long)_amap);
+//_tm_("_asel="+(long)_asel);
+//_tm_("_acnt="+(long)_acnt);
+//_tm_("_apth="+(long)_apth);
+//_tm_(_trxysz_([[self layer] bounds]));
+//_tm_(_trxysz_([[self layer] frame]));
 }
 
 #pragma mark ---- Getter/Setter ----
@@ -120,6 +159,7 @@ _bTrace_("[bPreview setFrame]",true);
 // ------------
 -(void)setDrawMap:(bool)value{
 	_dMap=value;
+    [_amap setNeedsDisplay];
 }
 
 // ---------------------------------------------------------------------------
@@ -127,6 +167,7 @@ _bTrace_("[bPreview setFrame]",true);
 // ------------
 -(void)setDrawSelection:(bool)value{
 	_dSel=value;
+    [_asel setNeedsDisplay];
 }
 
 // ---------------------------------------------------------------------------
@@ -134,15 +175,15 @@ _bTrace_("[bPreview setFrame]",true);
 // ------------
 -(void)setDrawContrastes:(bool)value{
 	_dCnt=value;
+    [_acnt setNeedsDisplay];
 }
 
 // ---------------------------------------------------------------------------
 // 
 // ------------
 -(void)setDrawPath:(bool)value{
-//_bTrace_("[bPreview setDrawPath]",false);
-//_tm_(value);
 	_dPth=value;
+    [_apth setNeedsDisplay];
 }
 
 // ---------------------------------------------------------------------------
@@ -249,96 +290,109 @@ NSEvent* event = [NSEvent otherEventWithType:NSEventTypeApplicationDefined
 
 #pragma mark ---- Draw ----
 // ---------------------------------------------------------------------------
+// Plus utilisé depuis le passage a CALayer, mais nécessaire
+// -------------
+-(void)drawRect:(NSRect)rect{
+_bTrace_("[bPreview drawRect]",true);
+}
+
+// ---------------------------------------------------------------------------
 //
 // ------------
--(void)drawRect:(NSRect)rect{
-_bTrace_("[bPreview drawRect]",false);
-CGRect				cgr=NSRectToCGRect(rect);
-CGContextRef		ctx;
-bGenericMacMapApp*	gapp=[_ctrlr getApp];
+-(void)drawLayer:(CALayer *)layer
+       inContext:(CGContextRef)ctx{
+//_bTrace_("[bPreview drawLayer:inContext]",true);
+bGenericMacMapApp*  gapp=[_ctrlr getApp];
+CGRect              cgr=[layer frame];
 
-	if(gapp==NULL){
-		return;
-	}
+//_tm_("drawLayer:"+(long)layer+" inContext:"+(long)ctx);
+    
+//    if([self layer] == layer){
+//_tm_("dessin root layer");
+//    }
+//    else if(_amap == layer){
+//_tm_("dessin map layer");
+//    }
+//    else if(_asel == layer){
+//_tm_("dessin selection layer");
+//    }
+//    else if(_acnt == layer){
+//_tm_("dessin contrastes layer");
+//    }
+//    else if(_apth == layer){
+//_tm_("dessin map layer");
+//    }
 
-    if([self inLiveResize]){
-        return;
+    if((_amap == layer) && _dMap){
+        _drcount++;
+//_tm_("--------------------");
+//_tm_("drawMap:"+_drcount);
+        CGContextSaveGState(ctx);
+        CGContextClipToRect(ctx,cgr);
+        CGContextSetRGBFillColor(ctx,1,1,1,1);
+        CGContextClearRect(ctx,cgr);
+        CGContextAddRect(ctx,cgr);
+        CGContextDrawPath(ctx,kCGPathFill);
+        gapp->layersMgr()->SwitchContext(kCtxGraphicContext,ctx);
+        gapp->layersMgr()->DrawLayers(NULL,&_ivrbnds);
+        gapp->layersMgr()->SwitchContext(kCGGraphicContext,NULL);
+        CGContextRestoreGState(ctx);
+//_tm_(_trxysz_([_amap frame]));
+//_tm_(_trxysz_([_amap bounds]));
+//_tm_("nb sublayers="+(long)[[_amap sublayers] count]);
+//_tm_("layer hidden="+(long)[_amap isHidden]);
+        _dMap=NO;
     }
     
-	if(_map==NULL){
-_tm_("_map==NULL -> Init Layers");
-        ctx=[[NSGraphicsContext graphicsContextWithWindow:[self window]] CGContext];
-                
-		_map=CGLayerCreateWithContext(ctx,cgr.size,NULL);
-		_cnt=CGLayerCreateWithContext(ctx,cgr.size,NULL);
-		_sel=CGLayerCreateWithContext(ctx,cgr.size,NULL);
-//		_pth=CGLayerCreateWithContext(ctx,cgr.size,NULL);
-	}
-    
-	if(_dMap){
-		_drcount++;
-_tm_("drawMap:"+_drcount);
-        ctx=CGLayerGetContext(_map);
-        
-		CGContextSaveGState(ctx);
-		CGContextClipToRect(ctx,cgr);
-		
-		CGContextSetRGBFillColor(ctx,1,1,1,1);
-		CGContextClearRect(ctx,cgr);
-		CGContextAddRect(ctx,cgr);
-		CGContextDrawPath(ctx,kCGPathFill);
-		
-		gapp->layersMgr()->SwitchContext(kCtxGraphicContext,ctx);
-		gapp->layersMgr()->DrawLayers(NULL,&_ivrbnds);
-		gapp->layersMgr()->SwitchContext(kCGGraphicContext,NULL);
-
-		CGContextRestoreGState(ctx);
-		        
-        [self postDrawEvent];
-	}	
-	
-	if(_dCnt){
-_tm_("drawContrastes:"+_drcount);
-        ctx=CGLayerGetContext(_cnt);
-		CGContextClearRect(ctx,cgr);
+    if((_acnt == layer) && _dCnt){
+//_tm_("--------------------");
+//_tm_("drawContrastes:"+_drcount);
+        CGContextClearRect(ctx,cgr);
         if(gapp->cntMgr()->count()>0){
             gapp->layersMgr()->DrawContrastes(ctx,NULL);
         }
-	}
-	
-	if(_dSel){
-_tm_("drawSel:"+_drcount);
-        ctx=CGLayerGetContext(_sel);
+//_tm_(_trxysz_([_acnt frame]));
+//_tm_(_trxysz_([_acnt bounds]));
+//_tm_("nb sublayers="+(long)[[_acnt sublayers] count]);
+//_tm_("layer hidden="+(long)[_acnt isHidden]);
+        _dCnt=NO;
+    }
+    
+    if((_asel == layer) && _dSel){
+//_tm_("--------------------");
+//_tm_("drawSel:"+_drcount);
         CGContextClearRect(ctx,cgr);
         if(gapp->selMgr()->count()>0){
             gapp->layersMgr()->DrawSelection(ctx,NULL);
         }
-	}
-
-
-    ctx=[[NSGraphicsContext currentContext] CGContext];
-
-    CGContextDrawLayerInRect(ctx,cgr,_map);
-    if(gapp->cntMgr()->count()>0){
-        CGContextDrawLayerInRect(ctx,cgr,_cnt);
-    }
-    if(gapp->selMgr()->count()>0){
-        CGContextDrawLayerInRect(ctx,cgr,_sel);
+//_tm_(_trxysz_([_asel frame]));
+//_tm_(_trxysz_([_asel bounds]));
+//_tm_("nb sublayers="+(long)[[_asel sublayers] count]);
+//_tm_("layer hidden="+(long)[_asel isHidden]);
+        _dSel=NO;
     }
     
-    if(_dPth){
+    if((_apth == layer) && _dPth){
+        _cur=ctx;
+//_tm_("--------------------");
+//_tm_("drawPath:"+_drcount);
 bGenericTool*    tool;
+        CGContextClearRect(ctx,cgr);
         for(long i=1;i<=gapp->toolMgr()->count();i++){
             tool=(bGenericTool*)(void*)gapp->toolMgr()->get(i);
             tool->update(true);
         }
+//_tm_(_trxysz_([_apth frame]));
+//_tm_(_trxysz_([_apth bounds]));
+//_tm_("nb sublayers="+(long)[[_apth sublayers] count]);
+//_tm_("layer hidden="+(long)[_apth isHidden]);
+        _dPth=NO;
     }
-    
-    _dMap=NO;
-    _dCnt=NO;
-    _dSel=NO;
-    _dPth=NO;
+//_tm_("--------------------");
+//_tm_(_call);
+    _call++;
 }
+
 
 #pragma mark ---- Events ----
 // ---------------------------------------------------------------------------
@@ -580,16 +634,6 @@ _bTrace_("[bPreview viewDidEndLiveResize]",true);
 	}
 		
 	[_ctrlr reset];
-	
-	CGLayerRelease(_map);
-	CGLayerRelease(_sel);
-	CGLayerRelease(_cnt);
-//    CGLayerRelease(_pth);
-    
-    _map=NULL;
-    _sel=NULL;
-    _cnt=NULL;
-//    _pth=NULL;
     
 	[self setDrawMap:YES];
 	[self setDrawSelection:YES];
@@ -617,6 +661,18 @@ _bTrace_("[bPreview updateTrackingAreas]",true);
 										 owner:self userInfo:nil];
 	[self addTrackingArea:_trck];
 	[super updateTrackingAreas];
+    
+    [_amap setBounds:[[self layer] bounds]];
+    [_amap setFrame:[[self layer] frame]];
+
+    [_asel setBounds:[[self layer] bounds]];
+    [_asel setFrame:[[self layer] frame]];
+    
+    [_acnt setBounds:[[self layer] bounds]];
+    [_acnt setFrame:[[self layer] frame]];
+    
+    [_apth setBounds:[[self layer] bounds]];
+    [_apth setFrame:[[self layer] frame]];
 }
 
 // ---------------------------------------------------------------------------
@@ -626,6 +682,13 @@ _bTrace_("[bPreview updateTrackingAreas]",true);
 _bTrace_("[bPreview inLiveResize]",true);
     return NO;
 }*/
+
+// ---------------------------------------------------------------------------
+//
+// ------------
+-(CGContextRef)getPath{
+    return _cur;
+}
 
 // ---------------------------------------------------------------------------
 // 
@@ -713,7 +776,6 @@ MapWindowController*	mmc=(MapWindowController*)[self windowController];
 //	return self;
 //}
 
-
 // ---------------------------------------------------------------------------
 // 
 // -----------
@@ -754,7 +816,14 @@ _bTrace_("[MapWindowController dealloc]",true);
 // ------------
 -(void)awakeFromNib{
 _bTrace_("[MapWindowController awakeFromNib]",true);
-	[_map installController:self];
+    [_map installController:self];
+}
+
+// ---------------------------------------------------------------------------
+//
+// -----------
+-(void)viewDidLoad{
+_bTrace_("[MapWindowController viewDidLoad]",true);
 }
 
 // ---------------------------------------------------------------------------
@@ -875,14 +944,14 @@ _te_("root == NULL");
 // -----------
 -(BOOL)read{
 _bTrace_("[MapWindowController read]",true);
-char			path[PATH_MAX];
+char    path[PATH_MAX];
 	[self getApp]->document()->location(path);
 _tm_(path);
-bStdDirectory	base(path);
-bGenericXMLBaseElement*	root;
+bStdDirectory   base(path);
+bGenericXMLBaseElement* root;
 	
 _PUSH_
-bXMLFile		f(_fpath,"r");
+bXMLFile    f(_fpath,"r");
 	f.mount(_app->classMgr(),&root);
 	if(!root){
 _te_("root == NULL, will try to make mapwindow params");
@@ -1089,7 +1158,7 @@ long offv=vx.v-o.v;
 	[_map setDrawMap:YES];
 	[_map setDrawSelection:YES];
 	[_map setDrawContrastes:YES];
-	[_map setNeedsDisplay:YES];
+//	[_map setNeedsDisplay:YES];
 }
 
 // ---------------------------------------------------------------------------
@@ -1099,7 +1168,6 @@ long offv=vx.v-o.v;
 	[_map setDrawMap:YES];
 	[_map setDrawSelection:YES];
 	[_map setDrawContrastes:YES];
-	[_map setNeedsDisplayInRect:rect];
 }
 
 // ---------------------------------------------------------------------------
@@ -1107,7 +1175,6 @@ long offv=vx.v-o.v;
 // -----------
 -(void)updateSelection{
 	[_map setDrawSelection:YES];
-	[_map setNeedsDisplay:YES];
 }
 
 // ---------------------------------------------------------------------------
@@ -1115,7 +1182,6 @@ long offv=vx.v-o.v;
 // -----------
 -(void)updateContrastes{
 	[_map setDrawContrastes:YES];
-	[_map setNeedsDisplay:YES];
 }
 
 // ---------------------------------------------------------------------------
@@ -1123,7 +1189,6 @@ long offv=vx.v-o.v;
 // -----------
 -(void)updatePath{
 	[_map setDrawPath:YES];
-	[_map setNeedsDisplay:YES];
 }
 
 // ---------------------------------------------------------------------------
