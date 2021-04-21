@@ -119,31 +119,31 @@ _bTrace_("[bPreview setFrame]",true);
 _bTrace_("[bPreview installController]",true);
 	_ctrlr=controller;
 	[[self undoManager] setLevelsOfUndo:1];
-            
+
     _amap=[[CALayer alloc] initWithLayer:[self layer]];
     [_amap setDelegate:[[self layer] delegate]];
     [_amap setBounds:[[self layer] bounds]];
     [_amap setFrame:[[self layer] frame]];
     [[self layer] addSublayer:_amap];
 
-    _asel=[[CALayer alloc] initWithLayer:[self layer]];
-    [_asel setDelegate:[[self layer] delegate]];
-    [_asel setBounds:[[self layer] bounds]];
-    [_asel setFrame:[[self layer] frame]];
-    [[self layer] addSublayer:_asel];
-    
     _acnt=[[CALayer alloc] initWithLayer:[self layer]];
     [_acnt setDelegate:[[self layer] delegate]];
     [_acnt setBounds:[[self layer] bounds]];
     [_acnt setFrame:[[self layer] frame]];
     [[self layer] addSublayer:_acnt];
-    
+ 
+    _asel=[[CALayer alloc] initWithLayer:[self layer]];
+    [_asel setDelegate:[[self layer] delegate]];
+    [_asel setBounds:[[self layer] bounds]];
+    [_asel setFrame:[[self layer] frame]];
+    [[self layer] addSublayer:_asel];
+
     _apth=[[CALayer alloc] initWithLayer:[self layer]];
-    [_apth setDelegate:[[self layer] delegate]];
-    [_apth setBounds:[[self layer] bounds]];
-    [_apth setFrame:[[self layer] frame]];
-    [[self layer] addSublayer:_apth];
-    
+     [_apth setDelegate:[[self layer] delegate]];
+     [_apth setBounds:[[self layer] bounds]];
+     [_apth setFrame:[[self layer] frame]];
+     [[self layer] addSublayer:_apth];
+     
 //_tm_("layer="+(long)[self layer]);
 //_tm_("_amap="+(long)_amap);
 //_tm_("_asel="+(long)_asel);
@@ -182,6 +182,8 @@ _bTrace_("[bPreview installController]",true);
 // 
 // ------------
 -(void)setDrawPath:(bool)value{
+//_bTrace_("[bPreview setDrawPath]",true);
+//_tm_(value);
 	_dPth=value;
     [_apth setNeedsDisplay];
 }
@@ -294,6 +296,7 @@ NSEvent* event = [NSEvent otherEventWithType:NSEventTypeApplicationDefined
 // -------------
 -(void)drawRect:(NSRect)rect{
 _bTrace_("[bPreview drawRect]",true);
+_tw_("unused");
 }
 
 // ---------------------------------------------------------------------------
@@ -329,10 +332,10 @@ CGRect              cgr=[layer frame];
 //_tm_("drawMap:"+_drcount);
         CGContextSaveGState(ctx);
         CGContextClipToRect(ctx,cgr);
-        CGContextSetRGBFillColor(ctx,1,1,1,1);
+        //CGContextSetRGBFillColor(ctx,1,1,1,1);
         CGContextClearRect(ctx,cgr);
-        CGContextAddRect(ctx,cgr);
-        CGContextDrawPath(ctx,kCGPathFill);
+        //CGContextAddRect(ctx,cgr);
+        //CGContextDrawPath(ctx,kCGPathFill);
         gapp->layersMgr()->SwitchContext(kCtxGraphicContext,ctx);
         gapp->layersMgr()->DrawLayers(NULL,&_ivrbnds);
         gapp->layersMgr()->SwitchContext(kCGGraphicContext,NULL);
@@ -341,12 +344,17 @@ CGRect              cgr=[layer frame];
 //_tm_(_trxysz_([_amap bounds]));
 //_tm_("nb sublayers="+(long)[[_amap sublayers] count]);
 //_tm_("layer hidden="+(long)[_amap isHidden]);
+        
+        [self setDrawSelection:YES];
+        [self setDrawContrastes:YES];
+
         _dMap=NO;
     }
     
     if((_acnt == layer) && _dCnt){
 //_tm_("--------------------");
 //_tm_("drawContrastes:"+_drcount);
+        CGContextClipToRect(ctx,cgr);
         CGContextClearRect(ctx,cgr);
         if(gapp->cntMgr()->count()>0){
             gapp->layersMgr()->DrawContrastes(ctx,NULL);
@@ -361,6 +369,7 @@ CGRect              cgr=[layer frame];
     if((_asel == layer) && _dSel){
 //_tm_("--------------------");
 //_tm_("drawSel:"+_drcount);
+        CGContextClipToRect(ctx,cgr);
         CGContextClearRect(ctx,cgr);
         if(gapp->selMgr()->count()>0){
             gapp->layersMgr()->DrawSelection(ctx,NULL);
@@ -376,7 +385,9 @@ CGRect              cgr=[layer frame];
         _cur=ctx;
 //_tm_("--------------------");
 //_tm_("drawPath:"+_drcount);
+//_tm_("drawLayer:"+(long)layer+" inContext:"+(long)ctx);
 bGenericTool*    tool;
+        CGContextClipToRect(ctx,cgr);
         CGContextClearRect(ctx,cgr);
         for(long i=1;i<=gapp->toolMgr()->count();i++){
             tool=(bGenericTool*)(void*)gapp->toolMgr()->get(i);
@@ -388,17 +399,14 @@ bGenericTool*    tool;
 //_tm_("layer hidden="+(long)[_apth isHidden]);
         _dPth=NO;
     }
-//_tm_("--------------------");
-//_tm_(_call);
-    _call++;
 }
-
 
 #pragma mark ---- Events ----
 // ---------------------------------------------------------------------------
 // Propagate to all
 // ------------
 -(void)sendEventAll:(NSEvent*)evt{
+//_bTrace_("[bPreview sendEventAll]",true);
 bGenericMacMapApp*	gapp=[_ctrlr getApp];
 	gapp->xmapMgr()->event(evt);
 	gapp->xboxMgr()->event(evt);
@@ -426,6 +434,7 @@ bGenericMacMapApp*	gapp=[_ctrlr getApp];
 // 
 // ------------
 -(void)mouseDown:(NSEvent*)event{
+//_bTrace_("[bPreview mouseDown]",true);
 	if([_ctrlr getApp]==NULL){
 		return;
 	}	
@@ -456,6 +465,7 @@ bGenericMacMapApp*	gapp=[_ctrlr getApp];
 // 
 // ------------
 -(void)mouseUp:(NSEvent*)event{
+//_bTrace_("[bPreview mouseUp]",true);
 	if([_ctrlr getApp]==NULL){
 		return;
 	}
@@ -486,6 +496,7 @@ bGenericMacMapApp*	gapp=[_ctrlr getApp];
 // 
 // ------------
 -(void)mouseMoved:(NSEvent*)event{
+//_bTrace_("[bPreview mouseMoved]",true);
 	if([_ctrlr getApp]==NULL){
 		return;
 	}
@@ -506,6 +517,7 @@ bGenericMacMapApp*	gapp=[_ctrlr getApp];
 // 
 // ------------
 -(void)mouseDragged:(NSEvent*)event{
+//_bTrace_("[bPreview mouseDragged]",true);
 	if([_ctrlr getApp]==NULL){
 		return;
 	}
@@ -617,7 +629,7 @@ bGenericMacMapApp*	gapp=[_ctrlr getApp];
 // 
 // ------------
 -(void)viewWillStartLiveResize{
-_bTrace_("[bPreview viewWillStartLiveResize]",true);
+//_bTrace_("[bPreview viewWillStartLiveResize]",true);
 	[self setDrawMap:NO];
 	[self setDrawSelection:NO];
 	[self setDrawContrastes:NO];
@@ -628,7 +640,7 @@ _bTrace_("[bPreview viewWillStartLiveResize]",true);
 // 
 // ------------
 -(void)viewDidEndLiveResize{
-_bTrace_("[bPreview viewDidEndLiveResize]",true);
+//_bTrace_("[bPreview viewDidEndLiveResize]",true);
 	if([_ctrlr getApp]==NULL){
 		return;
 	}
@@ -647,7 +659,7 @@ _bTrace_("[bPreview viewDidEndLiveResize]",true);
 // 
 // ------------
 -(void)updateTrackingAreas{
-_bTrace_("[bPreview updateTrackingAreas]",true);
+//_bTrace_("[bPreview updateTrackingAreas]",true);
 	if(_trck){
 		[self removeTrackingArea:_trck];
 		[_trck release];
@@ -1071,9 +1083,9 @@ _te_("root == NULL");
 // 
 // ------------
 -(void)idle{
-_bTrace_("[MapWindowController idle]",false);
+//_bTrace_("[MapWindowController idle]",false);
 	if(!_app){
-_tm_("_app == NULL");
+//_tm_("_app == NULL");
 		return;
 	}	
 	if(_app->cntMgr()->getState()!=_lc){
@@ -1155,9 +1167,12 @@ long offv=vx.v-o.v;
 // 
 // -----------
 -(void)updateUI{
-	[_map setDrawMap:YES];
-	[_map setDrawSelection:YES];
-	[_map setDrawContrastes:YES];
+//_bTrace_("[MapWindowController updateUI]",true);
+    [_map setDrawMap:YES];
+
+// Pas ici = c'est le drawMap qui doit demander le rafraichissement des autres layers
+//	[_map setDrawSelection:YES];
+//	[_map setDrawContrastes:YES];
 //	[_map setNeedsDisplay:YES];
 }
 
@@ -1165,15 +1180,19 @@ long offv=vx.v-o.v;
 // 
 // -----------
 -(void)updateUIInRect:(NSRect)rect{
+//_bTrace_("[MapWindowController updateUIInRect]",true);
 	[_map setDrawMap:YES];
-	[_map setDrawSelection:YES];
-	[_map setDrawContrastes:YES];
+
+// Idem
+//	[_map setDrawSelection:YES];
+//	[_map setDrawContrastes:YES];
 }
 
 // ---------------------------------------------------------------------------
 // 
 // -----------
 -(void)updateSelection{
+//_bTrace_("[MapWindowController updateSelection]",true);
 	[_map setDrawSelection:YES];
 }
 
@@ -1181,6 +1200,7 @@ long offv=vx.v-o.v;
 // 
 // -----------
 -(void)updateContrastes{
+//_bTrace_("[MapWindowController updateContrastes]",true);
 	[_map setDrawContrastes:YES];
 }
 
@@ -1188,6 +1208,7 @@ long offv=vx.v-o.v;
 // 
 // -----------
 -(void)updatePath{
+//_bTrace_("[MapWindowController updatePath]",true);
 	[_map setDrawPath:YES];
 }
 

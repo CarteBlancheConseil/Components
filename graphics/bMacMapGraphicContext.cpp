@@ -570,20 +570,29 @@ CGImageRef bMacMapGraphicContext::getImage(){
 // 
 // ------------
 void bMacMapGraphicContext::setDash(CGFloat* dash, int ndash, const char* name){
+//_bTrace_("bMacMapGraphicContext::setDash",false);
+//_tm_("dash="+(long)dash);
+//_tm_("ndash="+(long)ndash);
+//_tm_("name="+name);
 	if(_dash){
 		delete _dash;
 		_dash=NULL;
 	}
 	_ndash=ndash;
 	if(_ndash==0){
+//fprintf(stderr,"%s","[ no dash ]\n");
 		return;
 	}
 	_dash=new CGFloat[_ndash];
 	memmove(_dash,dash,ndash*sizeof(CGFloat));
+
+//fprintf(stderr,"%s","[");
 	for(int i=0;i<_ndash;i++){
 		_dash[i]*=getUnitCoef();
 		_dash[i]*=getFixConv();
+//fprintf(stderr," %f ",_dash[i]);
 	}
+//fprintf(stderr,"%s","]\n");
 }
 
 // ---------------------------------------------------------------------------
@@ -604,8 +613,8 @@ void bMacMapGraphicContext::setFillPattern(void* data, int sz, const char* name)
         strcpy(_fillpatname,name);
     }
 //	if(_fillpat){
-//// Ne plus faire de Release sur les Pattern, pris en charge par les bCGPDFPattern
-//// -> nécessité de retain sur les exports pdf
+// Ne plus faire de Release sur les Pattern, pris en charge par les bCGPDFPattern
+// -> nécessité de retain sur les exports pdf
 //        _fillpat=NULL;
 //	}
 //	_fillpat=PDFCreate(data,sz);

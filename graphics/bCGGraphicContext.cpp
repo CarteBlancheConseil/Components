@@ -176,6 +176,7 @@ void bCGGraphicContext::setCap(int cap){
 // 
 // ------------
 void bCGGraphicContext::setDash(CGFloat* dash, int ndash, const char* name){
+//_bTrace_("bCGGraphicContext::setDash",false);
 	bMacMapGraphicContext::setDash(dash,ndash,name);
 	if(!_ctx){
 		return;

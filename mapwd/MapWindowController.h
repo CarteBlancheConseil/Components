@@ -57,11 +57,7 @@
 	ivx_rect				_ivrbnds;
 	
 	long					_drcount;
-    
-    long                    _call;
-    
     CGContextRef            _cur;
-    
 }
 
 //----------------------------------------------------------------------------
@@ -82,7 +78,6 @@
 -(void)redoAction:(NSObject*)target;
 -(void)print:(id)sender;
 
--(void)addLayers;
 -(CGContextRef)getPath;
 
 //----------------------------------------------------------------------------
