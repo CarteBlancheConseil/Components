@@ -348,6 +348,8 @@ CGRect              cgr=[layer frame];
         [self setDrawSelection:YES];
         [self setDrawContrastes:YES];
 
+        [self postDrawEvent];
+        
         _dMap=NO;
     }
     
@@ -1167,32 +1169,20 @@ long offv=vx.v-o.v;
 // 
 // -----------
 -(void)updateUI{
-//_bTrace_("[MapWindowController updateUI]",true);
     [_map setDrawMap:YES];
-
-// Pas ici = c'est le drawMap qui doit demander le rafraichissement des autres layers
-//	[_map setDrawSelection:YES];
-//	[_map setDrawContrastes:YES];
-//	[_map setNeedsDisplay:YES];
 }
 
 // ---------------------------------------------------------------------------
 // 
 // -----------
 -(void)updateUIInRect:(NSRect)rect{
-//_bTrace_("[MapWindowController updateUIInRect]",true);
 	[_map setDrawMap:YES];
-
-// Idem
-//	[_map setDrawSelection:YES];
-//	[_map setDrawContrastes:YES];
 }
 
 // ---------------------------------------------------------------------------
 // 
 // -----------
 -(void)updateSelection{
-//_bTrace_("[MapWindowController updateSelection]",true);
 	[_map setDrawSelection:YES];
 }
 
@@ -1200,7 +1190,6 @@ long offv=vx.v-o.v;
 // 
 // -----------
 -(void)updateContrastes{
-//_bTrace_("[MapWindowController updateContrastes]",true);
 	[_map setDrawContrastes:YES];
 }
 
@@ -1208,7 +1197,6 @@ long offv=vx.v-o.v;
 // 
 // -----------
 -(void)updatePath{
-//_bTrace_("[MapWindowController updatePath]",true);
 	[_map setDrawPath:YES];
 }
 
