@@ -253,7 +253,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OBJROOT = "$(SYMROOT)";
 				PREBINDING = YES;
-				SDKROOT = macosx10.12;
+				SDKROOT = macosx;
 				SYMROOT = build;
 			};
 			name = Release;

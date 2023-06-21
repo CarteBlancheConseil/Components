@@ -304,7 +304,7 @@ _tw_("unused");
 // ------------
 -(void)drawLayer:(CALayer *)layer
        inContext:(CGContextRef)ctx{
-//_bTrace_("[bPreview drawLayer:inContext]",true);
+//_bTrace_("[bPreview drawLayer:inContext]",false);
 bGenericMacMapApp*  gapp=[_ctrlr getApp];
 CGRect              cgr=[layer frame];
 
@@ -400,6 +400,8 @@ bGenericTool*    tool;
 //_tm_("nb sublayers="+(long)[[_apth sublayers] count]);
 //_tm_("layer hidden="+(long)[_apth isHidden]);
         _dPth=NO;
+        
+        _cur=NULL;
     }
 }
 

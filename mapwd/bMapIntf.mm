@@ -163,6 +163,7 @@ void bMapIntf::idle(){
 // 
 // -----------
 void bMapIntf::updatePath(){
+//_bTrace_("bMapIntf::updatePath",true);
 	if(_controller){
         [_controller updatePath];
 	}
@@ -172,7 +173,8 @@ void bMapIntf::updatePath(){
 //
 // -----------
 CGContextRef bMapIntf::getPathContext(){
-    if(_controller){
+//_bTrace_("bMapIntf::getPathContext",true);
+   if(_controller){
         return [[_controller mainView] getPath];
     }
     return NULL;

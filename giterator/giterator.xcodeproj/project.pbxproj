@@ -205,7 +205,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		149F343008C2FCF900C314EB /* Deployment */ = {
+		149F343008C2FCF900C314EB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -233,6 +233,7 @@
 				INSTALL_PATH = build;
 				LIBRARY_SEARCH_PATHS = "";
 				LIBRARY_STYLE = Bundle;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
@@ -247,16 +248,16 @@
 				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		149F343408C2FCF900C314EB /* Deployment */ = {
+		149F343408C2FCF900C314EB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OBJROOT = build;
 				SDKROOT = macosx;
 			};
-			name = Deployment;
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -264,18 +265,18 @@
 		149F342E08C2FCF900C314EB /* Build configuration list for PBXNativeTarget "giterator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				149F343008C2FCF900C314EB /* Deployment */,
+				149F343008C2FCF900C314EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Deployment;
+			defaultConfigurationName = Release;
 		};
 		149F343208C2FCF900C314EB /* Build configuration list for PBXProject "giterator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				149F343408C2FCF900C314EB /* Deployment */,
+				149F343408C2FCF900C314EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Deployment;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
