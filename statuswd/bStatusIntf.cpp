@@ -49,7 +49,7 @@ bStatusIntf::~bStatusIntf(){
 // 
 // -----------
 void bStatusIntf::init(){
-	_bTrace_("bStatusIntf::init()",true);
+_bTrace_("bStatusIntf::init()",true);
 	_ref=initializeCocoa();
 }
 

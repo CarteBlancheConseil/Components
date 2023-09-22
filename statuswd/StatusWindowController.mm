@@ -132,8 +132,8 @@ CGFloat menuBarHeight=[[[NSApplication sharedApplication] mainMenu] menuBarHeigh
 // 
 // -----------
 -(void)writeMessage:(const char*)msg{	
-	[[self window] makeKeyAndOrderFront:nil];
-	[[self window] makeFirstResponder:nil];
+//	[[self window] makeKeyAndOrderFront:nil];
+//	[[self window] makeFirstResponder:nil];
 	[_msg setStringValue:[NSString stringWithCString:msg encoding:NSMacOSRomanStringEncoding]];
 }
 

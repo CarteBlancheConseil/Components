@@ -31,8 +31,6 @@
 #include <mox_intf/CGUtils.h>
 #include <MacMapSuite/bTrace.h>
 
-#define kCtxGraphicContext	'Ctx_'
-
 // ---------------------------------------------------------------------------
 // Constructeur
 // ------------
