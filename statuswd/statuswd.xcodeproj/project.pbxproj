@@ -237,10 +237,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				OBJROOT = "../../zXCode Div/buildprod";
+				OBJROOT = build;
 				PREBINDING = YES;
 				SDKROOT = macosx;
-				SYMROOT = ../../build;
+				SYMROOT = build;
 			};
 			name = Release;
 		};

@@ -300,7 +300,8 @@ protected:
 	bGenericMacMapApp*		_app;
 	CGImageRef				_imagedoc;
 	CGPDFDocumentRef		_pdfdoc;
-	CGPDFDocumentRef		_strokepat;
+	
+    CGPDFDocumentRef		_strokepat;
     char					_strokepatname[256];
 	CGPDFDocumentRef		_fillpat;
     char					_fillpatname[256];

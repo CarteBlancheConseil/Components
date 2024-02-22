@@ -607,9 +607,12 @@ CGFloat* bMacMapGraphicContext::getDash(int* ndash){
 // 
 // ------------
 void bMacMapGraphicContext::setFillPattern(void* data, int sz, const char* name){
-    if(strstr(name,_fillpatname)!=0){
+_bTrace_("bMacMapGraphicContext::setFillPattern",true);
+   if(strstr(name,_fillpatname)!=0){
+_tm_("free");
         freeFillPattern();
-        _fillpat=PDFCreate(data,sz);
+_tm_("PDFCreate");
+       _fillpat=PDFCreate(data,sz);
         strcpy(_fillpatname,name);
     }
 //	if(_fillpat){
@@ -631,7 +634,9 @@ CGPDFDocumentRef bMacMapGraphicContext::getFillPattern(){
 //
 // ------------
 void bMacMapGraphicContext::freeFillPattern(){
+_bTrace_("bMacMapGraphicContext::freeFillPattern",true);
     if(_fillpat){
+_tm_((void*)_fillpat);
         CGPDFDocumentRelease(_fillpat);
         _fillpat=NULL;
     }
@@ -647,8 +652,8 @@ void bMacMapGraphicContext::setStrokePattern(void* data, int sz, const char* nam
         strcpy(_strokepatname,name);
     }
 //	if(_strokepat){
-//// Ne plus faire de Release sur les Pattern, pris en charge par les bCGPDFPattern
-//// -> nécessité de retain sur les exports pdf
+// Ne plus faire de Release sur les Pattern, pris en charge par les bCGPDFPattern
+// -> nécessité de retain sur les exports pdf
 //		_strokepat=NULL;
 //	}
 //	_strokepat=PDFCreate(data,sz);

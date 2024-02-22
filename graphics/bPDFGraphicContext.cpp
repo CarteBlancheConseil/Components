@@ -85,7 +85,7 @@ void bPDFGraphicContext::setFillPattern(void* data, int sz, const char* name){
         return;
     }
 CGFloat				color[4]={0,0,0,1};
-CGPatternCallbacks	callbacks={0,&bCGPDFPattern::drawproc,&bCGPDFPattern::releaseproc};
+CGPatternCallbacks	callbacks={0,bCGPDFPattern::drawproc,bCGPDFPattern::releaseproc};
 CGColorSpaceRef		baseSpace=CGColorSpaceCreateDeviceRGB();
 CGColorSpaceRef		patternSpace=CGColorSpaceCreatePattern(baseSpace);
 CGFloat				cf=getUnitCoef()*getFixConv();
@@ -137,7 +137,7 @@ void bPDFGraphicContext::setStrokePattern(void* data, int sz, const char* name){
         return;
     }
 CGFloat				color[4]={0,0,0,1};
-CGPatternCallbacks	callbacks={0,&bCGPDFPattern::drawproc,&bCGPDFPattern::releaseproc};
+CGPatternCallbacks	callbacks={0,bCGPDFPattern::drawproc,bCGPDFPattern::releaseproc};
 CGColorSpaceRef		baseSpace=CGColorSpaceCreateDeviceRGB();
 CGColorSpaceRef		patternSpace=CGColorSpaceCreatePattern(baseSpace);
 CGFloat				cf=getUnitCoef()*getFixConv();
